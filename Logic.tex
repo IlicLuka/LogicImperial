@@ -35,22 +35,22 @@
 \DeclareMathOperator{\grad}{grad}
 
 \theoremstyle{plain}
-\newtheorem{theorem}{Satz}[section]
+\newtheorem{theorem}{Theorem.}[section]
 \newtheorem{lemma}[theorem]{Lemma.} 
 \newtheorem{proposition}[theorem]{Proposition.}  
-\newtheorem{corollary}[theorem]{Korollar.}
+\newtheorem{corollary}[theorem]{Corollary.}
 
 \theoremstyle{definition}
 \newtheorem{definition}[theorem]{Definition.}
-\newtheorem{remark, definition}[theorem]{Bemerkung und Definition.}
-\newtheorem{lemma, definition}[theorem]{Lemma und Definition.}  
-\newtheorem{theorem, definition}[theorem]{Satz und Definition.}  
+\newtheorem{remark, definition}[theorem]{Remark and Definition.}
+\newtheorem{lemma, definition}[theorem]{Lemma and Definition.}  
+\newtheorem{theorem, definition}[theorem]{Theorem and Definition.}  
 
 \theoremstyle{remark}
-\newtheorem*{remark}{\textbf{Bemerkung}}
-\newtheorem*{exercise}{\textbf{Aufgabe}}
-\newtheorem*{example}{\textbf{Beispiel}}
-\newtheorem*{remark, example}{\textbf{Bemerkung und Beispiel}} 
+\newtheorem*{remark}{\textbf{Remark}}
+\newtheorem*{exercise}{\textbf{Exercise}}
+\newtheorem*{example}{\textbf{Example}}
+\newtheorem*{remark, example}{\textbf{Remark and Exercise}} 
 
 
 \begin{document}
@@ -88,10 +88,92 @@ A \emph{truth function} of $n$ variables is a function
 	\[ f: \{ T,F \}^n \rightarrow \{ T,F \} \quad. \]
 \end{definition}
 
-Exercize: How many functions are there for $n$ variables?
+\begin{exercise} 
+How many functions are there for $n$ variables?
+
+\end{exercise}
 
 \begin{definition}
 Suppose $\phi$ is a formula with variables $p_1, \dots, p_n$ then we obtain a truth function $F_{\phi}: \{T,F\}^n \rightarrow \{T,F\}$ whose value at $(x_1, \dots, x_n) \quad x_i \in \{T,F\} $ is the truth value of $\phi$ when $p_i$ has value $x_i$. THe function $F_{\phi}$ is the \emph{truth function of $\phi$}.
 \end{definition}
+
+\begin{example}
+What is the truth function of 
+\[ (((p \rightarrow q) \land (q \rightarrow (\lnot p))) \rightarrow (\lnot p)) \quad ? \]
+
+It is always true.
+\end{example}
+
+\begin{definition}
+A propositional formula $\phi$ whose truth function $F_{\phi}$ is always true is called \emph{tautology}.
+Say that formulas $\phi, \psi$ are \emph{logically equivalent} (l.e.) if they have the same truth function.
+\end{definition}
+
+\begin{remark}
+$\phi,\psi$ are l.e. iff $(\phi \leftrightarrow \psi)$ is a tautology.
+Also, suppose that we got some formula $\phi$ with variables $p_1, \dots, p_n$ and $\phi_1,\dots,\phi_n$ are formulas with variables $q_1, \dots, q_r$.
+For each $i \leq n$ substitute $\phi$ in place of $p_i$ in $\phi$. Then the result is a formula $ \psi$ and if $\phi$ is a tautology, then so is $\psi$.
+\end{remark}
+
+\begin{proof}
+The first statement is easy. For the second remark that
+	\[ F_{\psi}(q_1, \dots, q_r) = F_{\phi}(F_{\phi_1}(q_1, \dots, q_r), \dots, F_{\phi_n}(q_1, \dots, q_r)) \]
+by the induction on the number of connectives in $\phi$.
+\end{proof}
+
+\begin{example}
+\begin{enumerate}
+\item $(p_1 \land ( p_2 \land p_3))$ is l.e. to $((p_1 \land p_2) \land p_3)$,
+\item same with $ \lor $,
+\item $(p_1 \lor (p_2 \land p_3))$ is l.e. to $((p_1 \lor p_2) \land (p_1 \lor p_3))$ 
+\item similar the other way around.
+\item etc.
+
+\end{enumerate}
+\end{example}
+
+\begin{remark}
+Note that by the remark above, we can boost these equivalences by substituting formulas for the variables.
+\end{remark}
+
+\begin{definition}
+
+Say that a set of connectives is \emph{adequade} if for eery $n \geq 1$, everz truth function of $n$ variables is the truth function of some formula which isnvolves onlz connectives from the set and variables $p_1, \dots, p_n$.
+\end{definition}
+
+\begin{theorem}
+The set $\{ \lnot, \land, \lor\}$ is adequate. 
+\end{theorem}
+
+\begin{proof}
+Let $G: \{T,F\}^n \rightarrow \{T,F\}$
+\begin{enumerate}
+\item $G(v) = F$ for all $v \in \{T,F\}$.
+Take $\phi$ to be $(p_1 \land(\lnot p_1))$ then $ G = F_{\phi}$
+\item (\emph{Disjunctive Normal Form}
+List the $v \in \{ T,F \}^n$ with $G(v) = T$ as $v_1, \dots, v_r$.
+Write $v_i = (v_{i1},\dots,v_{in})$
+Define
+\[ q_{ij} = \begin{cases} p_j \text{if} v_{ij} = T \\  ( \lnot p_j) \text{if} v_{ij} = F
+\end{cases}
+So $q_{ij}$ has value $T$ iff $p_j$ has value $v_{ij}$.
+Let $\psi_i$ be
+	\[ (q_{i1}, \dots, q_{in})\]
+Then $F_{\psi_i}(v) = T$ iff each $q_{ij}$ has value $T$ iff $v = v_i$.
+
+Let $\theta$ be $(\phi_1 \lor, \dots , \lor \phi_r)$.
+Then $F_{\theta}(v) = T$ iff $F_{\psi_i}(v) = T$ for some $i$ which is equivalent to $v = v_i$ for some $i \leq r$.
+Thus $F_{\theta} (v) = T$ iff $G(v) = T$ i.e. $F_{\theta} = G$.
+As $\theta$ was constructed using only $\lnot,\lor,\land$ the statement follows.
+\end{enumerate}
+
+\end{proof}
+
+\begin{corollary} Suppose $\chi\ is a formula 
+Then $\chi$ is l.e. to a formula in dnf.
+\end{corollary}
+
+
+
 
 \end{document}
