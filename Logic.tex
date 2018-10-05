@@ -1,0 +1,97 @@
+\documentclass[a4paper,oneside,11pt,DIV=12,parskip=half]{scrartcl}
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{microtype}
+\usepackage{lmodern}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{showkeys}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{enumerate}
+\usepackage[usenames, dvipsnames]{color}
+\usepackage{hyperref}
+
+\title{Logic}
+\author{ Luka Ili\'{c}}
+
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\newcommand{\E}{\mathcal E}
+\newcommand{\s}{\mathcal S}
+
+\newcommand{\pmat}[1]{\begin{pmatrix}
+		#1
+\end{pmatrix}}
+\newcommand{\abs}[1]{\left| #1\right|}
+
+\newcommand{\skal}[1]{\left \langle #1 \right\rangle}
+
+
+\DeclareMathOperator{\grad}{grad}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Satz}[section]
+\newtheorem{lemma}[theorem]{Lemma.} 
+\newtheorem{proposition}[theorem]{Proposition.}  
+\newtheorem{corollary}[theorem]{Korollar.}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition.}
+\newtheorem{remark, definition}[theorem]{Bemerkung und Definition.}
+\newtheorem{lemma, definition}[theorem]{Lemma und Definition.}  
+\newtheorem{theorem, definition}[theorem]{Satz und Definition.}  
+
+\theoremstyle{remark}
+\newtheorem*{remark}{\textbf{Bemerkung}}
+\newtheorem*{exercise}{\textbf{Aufgabe}}
+\newtheorem*{example}{\textbf{Beispiel}}
+\newtheorem*{remark, example}{\textbf{Bemerkung und Beispiel}} 
+
+
+\begin{document}
+
+\maketitle
+
+\pagebreak
+
+\tableofcontents
+
+\pagebreak
+
+\section{Propositional logic}
+
+Convention: In this course we write $T$ for true and $F$ for false.
+
+\begin{definition}
+	The language of propositional logic consists of following symbols:
+ \emph{propositional variables} denoted (mostly) by $ p,q, \dots $ or 	$p_1,p_2,\dots, q_1, q_2, \dots$
+	and the \emph{connectives} $\land, \lor, \lnot, \rightarrow, \leftrightarrow$.
+\end{definition}
+
+\begin{definition}
+	A \emph{propositional formula} is a string of symbols obatained in the following way
+\begin{enumerate}
+\item Any variable is a formula \\
+\item If $\phi $ and $\psi$ are formulas then so are
+$(\phi \land \psi),(\phi \lor \psi), (\lnot \phi), (\phi \rightarrow \psi), (\phi \leftrightarrow \psi)$
+\item Any formula is obtained in this way.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+A \emph{truth function} of $n$ variables is a function 
+	\[ f: \{ T,F \}^n \rightarrow \{ T,F \} \quad. \]
+\end{definition}
+
+Exercize: How many functions are there for $n$ variables?
+
+\begin{definition}
+Suppose $\phi$ is a formula with variables $p_1, \dots, p_n$ then we obtain a truth function $F_{\phi}: \{T,F\}^n \rightarrow \{T,F\}$ whose value at $(x_1, \dots, x_n) \quad x_i \in \{T,F\} $ is the truth value of $\phi$ when $p_i$ has value $x_i$. THe function $F_{\phi}$ is the \emph{truth function of $\phi$}.
+\end{definition}
+
+\end{document}
