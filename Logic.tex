@@ -6,7 +6,7 @@
 \usepackage{lmodern}
 \usepackage{amsmath}
 \usepackage{amssymb}
-\usepackage{showkeys}
+%\usepackage{showkeys}
 \usepackage{amsthm}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -94,7 +94,7 @@ How many functions are there for $n$ variables?
 \end{exercise}
 
 \begin{definition}
-Suppose $\phi$ is a formula with variables $p_1, \dots, p_n$ then we obtain a truth function $F_{\phi}: \{T,F\}^n \rightarrow \{T,F\}$ whose value at $(x_1, \dots, x_n) \quad x_i \in \{T,F\} $ is the truth value of $\phi$ when $p_i$ has value $x_i$. THe function $F_{\phi}$ is the \emph{truth function of $\phi$}.
+Suppose $\phi$ is a formula with variables $p_1, \dots, p_n$ then we obtain a truth function $F_{\phi}: \{T,F\}^n \rightarrow \{T,F\}$ whose value at $(x_1, \dots, x_n) \quad x_i \in \{T,F\} $ is the truth value of $\phi$ when $p_i$ has value $x_i$. The function $F_{\phi}$ is the \emph{truth function of $\phi$}.
 \end{definition}
 
 \begin{example}
@@ -138,10 +138,10 @@ Note that by the remark above, we can boost these equivalences by substituting f
 
 \begin{definition}
 
-Say that a set of connectives is \emph{adequade} if for eery $n \geq 1$, everz truth function of $n$ variables is the truth function of some formula which isnvolves onlz connectives from the set and variables $p_1, \dots, p_n$.
+Say that a set of connectives is \emph{adequate} if for evry $n \geq 1$, every truth function of $n$ variables is the truth function of some formula which involves only connectives from the set and variables $p_1, \dots, p_n$.
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}\label{connectives}
 The set $\{ \lnot, \land, \lor\}$ is adequate. 
 \end{theorem}
 
@@ -155,7 +155,7 @@ List the $v \in \{ T,F \}^n$ with $G(v) = T$ as $v_1, \dots, v_r$.
 Write $v_i = (v_{i1},\dots,v_{in})$
 Define
 \[ q_{ij} = \begin{cases} p_j \text{if} v_{ij} = T \\  ( \lnot p_j) \text{if} v_{ij} = F
-\end{cases}
+\end{cases}\]
 So $q_{ij}$ has value $T$ iff $p_j$ has value $v_{ij}$.
 Let $\psi_i$ be
 	\[ (q_{i1}, \dots, q_{in})\]
@@ -169,11 +169,39 @@ As $\theta$ was constructed using only $\lnot,\lor,\land$ the statement follows.
 
 \end{proof}
 
-\begin{corollary} Suppose $\chi\ is a formula 
-Then $\chi$ is l.e. to a formula in dnf.
+\begin{definition}
+A formula in the form as $\theta$ in the proof above (\ref{connectives}) is said to be in \emph{disjunctive normal form} (dnf).
+\end{definition}
+
+\begin{corollary} Suppose $\chi$ is a formula which truth function is not always false. Then $\chi$ is l.e. to a formula in dnf.
 \end{corollary}
 
+\begin{proof}
+Take $G = F_{\chi}$ and apply the second case from the proof above.
+\end{proof}
+\begin{example} For
+\[ \chi: \quad (( p_1 \rightarrow p_2) \rightarrow (\lnot p_2)) \] 
+the truth function $F_{\chi}(v)$ is true, precisely when $v = \{T,F\}$ or $ v = \{F, F \}$.
+Hence the dnf is:
+\[ ((p_1 \land (\lnot p_2)) \lor ((\lnot p_1) \lor ( \lnot p_2))). \]
 
+\end{example}
 
+\begin{corollary}
+The following sets of connectives are adequate:
+\begin{enumerate}
+    \item $\lnot, \lor$
+    \item $\lnot, \land$
+    \item $\lnot, \rightarrow$.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+\begin{enumerate}
+    \item By \ref{connectives} we just need to show, that $\land$ can be expressed using $\lnot,\lor$. $(p \land q)$ is l.e. to $(\lnot((\lnot p) \lor (\lnot q))$.
+    \item similar to the approach above. $(p \lor q)$ is l.e. to $(\lnot((\lnot p) \land (\lnot q))$.
+    \item Due to the cases above, it suffices to obtain either $\land$ or $\lor$ using $\lnot,\rightarrow$. $(p \lor q)$ is l.e. to $((\lnot p) \rightarrow  q)$.
+\end{enumerate}
+\end{proof}
 
 \end{document}
