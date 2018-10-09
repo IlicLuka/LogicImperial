@@ -63,22 +63,33 @@
 
 \pagebreak
 
+\section*{Preface}
+The following notes, are to be regarded as such -- notes. They should contain most of what is written down in the logic lecture at Imperial College London (2018) by professor Evans. More likely then not, there will be a considerable amount of spelling errors (--please report everything to email down below or in Github comments--) that hopefully do not alter any important meaning. These notes will be constantly reread (by you the readers as well as myself) so I hope that at the end of the term most errors will be corrected so that anybody reading this will find good lecture notes for the exam.
+
+\textbf{Anybody willing to help me, can write me an email at \\
+\\ luka.ilic18@imperial.ac.uk} \\ \\ Help will only consist of being able to edit errors yourself. (So no need for any texing, except if you really want to.)
+
+This is a project for my fellow students, so I hope it will be appreciated and used. I wish everbody reading this a lot of fun with the following content.
+
+\pagebreak
+
 \section{Propositional logic}
 
+\subsection{Truth functions}
 Convention: In this course we write $T$ for true and $F$ for false.
 
 \begin{definition}
-	The language of propositional logic consists of following symbols:
+	The alphabet of propositional logic consists of following symbols:
  \emph{propositional variables} denoted (mostly) by $ p,q, \dots $ or 	$p_1,p_2,\dots, q_1, q_2, \dots$
 	and the \emph{connectives} $\land, \lor, \lnot, \rightarrow, \leftrightarrow$.
 \end{definition}
 
-\begin{definition}
-	A \emph{propositional formula} is a string of symbols obatained in the following way
+\begin{definition}\label{Def:formula}
+	A \emph{propositional formula} is a string of symbols obtained in the following way:
 \begin{enumerate}
-\item Any variable is a formula \\
+\item Any variable is a formula. \\
 \item If $\phi $ and $\psi$ are formulas then so are
-$(\phi \land \psi),(\phi \lor \psi), (\lnot \phi), (\phi \rightarrow \psi), (\phi \leftrightarrow \psi)$
+$(\phi \land \psi),(\phi \lor \psi), (\lnot \phi), (\phi \rightarrow \psi), (\phi \leftrightarrow \psi)$.
 \item Any formula is obtained in this way.
 \end{enumerate}
 \end{definition}
@@ -101,7 +112,6 @@ Suppose $\phi$ is a formula with variables $p_1, \dots, p_n$ then we obtain a tr
 What is the truth function of 
 \[ (((p \rightarrow q) \land (q \rightarrow (\lnot p))) \rightarrow (\lnot p)) \quad ? \]
 
-It is always true.
 \end{example}
 
 \begin{definition}
@@ -118,7 +128,7 @@ For each $i \leq n$ substitute $\phi$ in place of $p_i$ in $\phi$. Then the resu
 \begin{proof}
 The first statement is easy. For the second remark that
 	\[ F_{\psi}(q_1, \dots, q_r) = F_{\phi}(F_{\phi_1}(q_1, \dots, q_r), \dots, F_{\phi_n}(q_1, \dots, q_r)) \]
-by the induction on the number of connectives in $\phi$.
+by induction on the number of connectives in $\phi$.
 \end{proof}
 
 \begin{example}
@@ -141,7 +151,7 @@ Note that by the remark above, we can boost these equivalences by substituting f
 Say that a set of connectives is \emph{adequate} if for evry $n \geq 1$, every truth function of $n$ variables is the truth function of some formula which involves only connectives from the set and variables $p_1, \dots, p_n$.
 \end{definition}
 
-\begin{theorem}\label{connectives}
+\begin{theorem}\label{Th:connectives}
 The set $\{ \lnot, \land, \lor\}$ is adequate. 
 \end{theorem}
 
@@ -154,7 +164,7 @@ Take $\phi$ to be $(p_1 \land(\lnot p_1))$ then $ G = F_{\phi}$
 List the $v \in \{ T,F \}^n$ with $G(v) = T$ as $v_1, \dots, v_r$.
 Write $v_i = (v_{i1},\dots,v_{in})$
 Define
-\[ q_{ij} = \begin{cases} p_j \text{if} v_{ij} = T \\  ( \lnot p_j) \text{if} v_{ij} = F
+\[ q_{ij} = \begin{cases} p_j &\text{if } v_{ij} = T \\  ( \lnot p_j) &\text{if } v_{ij} = F
 \end{cases}\]
 So $q_{ij}$ has value $T$ iff $p_j$ has value $v_{ij}$.
 Let $\psi_i$ be
@@ -170,8 +180,14 @@ As $\theta$ was constructed using only $\lnot,\lor,\land$ the statement follows.
 \end{proof}
 
 \begin{definition}
-A formula in the form as $\theta$ in the proof above (\ref{connectives}) is said to be in \emph{disjunctive normal form} (dnf).
+A formula in the form as $\theta$ in the proof above (\ref{Th:connectives}) is said to be in \emph{disjunctive normal form (dnf)}.
 \end{definition}
+
+\begin{remark}
+
+Apart from the very intuitive and useful dnf, having a small adequate set at our disposal is useful for the following reason. It shortens induction proofs over the structure of formulas by a considerable amount, as the reader will surely experience in due time.
+
+\end{remark}
 
 \begin{corollary} Suppose $\chi$ is a formula which truth function is not always false. Then $\chi$ is l.e. to a formula in dnf.
 \end{corollary}
@@ -181,9 +197,9 @@ Take $G = F_{\chi}$ and apply the second case from the proof above.
 \end{proof}
 \begin{example} For
 \[ \chi: \quad (( p_1 \rightarrow p_2) \rightarrow (\lnot p_2)) \] 
-the truth function $F_{\chi}(v)$ is true, precisely when $v = \{T,F\}$ or $ v = \{F, F \}$.
+the truth function $F_{\chi}(v)$ is true precisely when $v = \{T,F\}$ or $ v = \{F, F \}$.
 Hence the dnf is:
-\[ ((p_1 \land (\lnot p_2)) \lor ((\lnot p_1) \lor ( \lnot p_2))). \]
+\[ ((p_1 \land (\lnot p_2)) \lor ((\lnot p_1) \land ( \lnot p_2))). \]
 
 \end{example}
 
@@ -198,10 +214,100 @@ The following sets of connectives are adequate:
 
 \begin{proof}
 \begin{enumerate}
-    \item By \ref{connectives} we just need to show, that $\land$ can be expressed using $\lnot,\lor$. $(p \land q)$ is l.e. to $(\lnot((\lnot p) \lor (\lnot q))$.
+    \item By \ref{Th:connectives} we just need to show, that $\land$ can be expressed using $\lnot,\lor$. $(p \land q)$ is l.e. to $(\lnot((\lnot p) \lor (\lnot q))$.
     \item similar to the approach above. $(p \lor q)$ is l.e. to $(\lnot((\lnot p) \land (\lnot q))$.
-    \item Due to the cases above, it suffices to obtain either $\land$ or $\lor$ using $\lnot,\rightarrow$. $(p \lor q)$ is l.e. to $((\lnot p) \rightarrow  q)$.
+    \item Due to the cases above, it suffices to express either $\land$ or $\lor$ using $\lnot,\rightarrow$. $(p \lor q)$ is l.e. to $((\lnot p) \rightarrow  q)$.
 \end{enumerate}
 \end{proof}
+
+\begin{example}
+
+Some sets of connectives that are not adequate are:
+\begin{enumerate}
+    \item $\land, \lor$
+    \item $\lnot,\leftrightarrow$
+\end{enumerate}
+\begin{proof}
+\begin{enumerate}
+    \item If $\phi$ is build using $\land,\lor$ then 
+    $F_\phi(T,\dots,T) = T$ as proven by induction over number of connectives.
+    \item exercise.
+\end{enumerate}
+\end{proof}
+\end{example}
+
+\begin{example}
+The \emph{NOR} connective $\downarrow$ has truth table:
+    \begin{tabular}{c|c|c}
+        $p$ & $q$ & $(p \downarrow q)$ \\
+        \hline
+        $T$ & $T$ & $F$ \\ 
+        $T$ & $F$ & $F$ \\
+        $F$ & $T$ & $F$ \\
+        $F$ & $F$ & $T$ \\
+        
+    \end{tabular}
+    It is adequate on its own. (exercise - express $\lnot, \land$)
+\end{example}
+
+\subsection{A formal system for propositional logic}
+
+Idea: Try to generate all tautologies from certain basic assumptions (axioms) using appropriate deduction rules.
+
+\begin{definition}
+\textbf{This is important!}
+
+A \emph{formal deduction system} $\Sigma$ has the following ingredients:
+\begin{enumerate}
+    \item An \emph{alphabet} $A$ of symbols $(A \neq \emptyset)$.
+    \item A non empty set $\mathcal{J}$ of the set of all finite sequences (`strings`) of the elements of A: the \emph{formulas} of $\Sigma$.
+    \item A subset $\mathcal{A} \subseteq \mathcal{J}$ called the \emph{axioms} of $\Sigma$. 
+    \item A collection of \emph{deduction rules}.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}
+A \emph{proof} in $\Sigma$ us a finite sequence of formulas in $\mathcal{J}$ \[ \phi_1,\dots,\phi_n \] such that each $ \phi_i $ is either an axiom \emph{or} is obtained from $ \phi_1, \dots, \phi_{i-1} $ using one of the deduction rules. The last (or any) formula in a proof is a \emph{theorem} of $\Sigma$.
+Write $\vdash_\Sigma \phi$ for `$\phi$ is a theorem of $\Sigma$`. 
+\end{definition}
+
+\begin{remark}
+\begin{enumerate}
+    \item If $\phi \in \mathcal{A}$ then $\vdash_\Sigma \phi$.
+    \item We should have an algorithm to test whether a string of symbols really is a formula and whether it is an axiom. Then someone who is willing to follow an algorithm precisely (computer) should be able to generate all possible proofs in $\sigma$ and check whether something is a proof. (We say $\Sigma$ is \emph{recursive} in this case.)
+\end{enumerate}
+\end{remark}
+
+\begin{definition}
+The formal system $L$ for propositional logic has:
+
+\begin{itemize}
+    \item \textbf{Alphabet}: variables $p_1,p_2,p_3\dots$  connectives $\lnot,\rightarrow$
+    punctuation ),(.
+    \item \textbf{Formulas}: as defined in \ref{Def:formula} and will be called \emph{$L$-formulas}.
+    \item \textbf{Axioms}: Suppose $\phi,\psi,\chi$ are $L$-formulas. The following are axioms of $L$:
+    \begin{itemize}
+        \item[A1] $(\phi \rightarrow (\psi \rightarrow \phi))$
+        \item[A2] $((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\psi \rightarrow \chi)))$
+        \item[A3]: $(((\lnot \psi) \rightarrow ( \lnot \phi)) \rightarrow (\phi \rightarrow \psi))$
+    \end{itemize}
+    \item \textbf{deduction rule}: \emph{ Modus Ponens (MP)} from $\phi,  (\phi \rightarrow \psi)$ deduce $\psi$.
+\end{itemize}
+
+\begin{example}
+
+Suppose $\phi$ is an $L$-formula. Then $\vdash_L (\phi \rightarrow \phi)$.
+A proof in $L$ could be as follows:
+\begin{enumerate}
+    \item $(\phi \rightarrow ((\phi \rightarrow \phi) \rightarrow \phi))$ use A1
+    \item $(\chi \rightarrow (\phi \rightarrow ((\phi \rightarrow \phi) \rightarrow \phi)))$ use A1 and MP
+    \item $((\phi \rightarrow (\phi \rightarrow \phi)) \rightarrow (\phi \rightarrow \phi))$
+    \item $(\phi \rightarrow (\phi \rightarrow \phi))$
+    \item $(\phi \rightarrow \phi)$.
+\end{enumerate}
+\end{example}
+\end{definition}
+
+
 
 \end{document}
