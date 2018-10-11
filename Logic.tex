@@ -108,6 +108,49 @@ How many functions are there for $n$ variables?
 Suppose $\phi$ is a formula with variables $p_1, \dots, p_n$ then we obtain a truth function $F_{\phi}: \{T,F\}^n \rightarrow \{T,F\}$ whose value at $(x_1, \dots, x_n) \quad x_i \in \{T,F\} $ is the truth value of $\phi$ when $p_i$ has value $x_i$. The function $F_{\phi}$ is the \emph{truth function of $\phi$}.
 \end{definition}
 
+\begin{remark} The truth tables for the connectives are the following:
+\begin{center}
+\begin{tabular}{c|c}
+     $p$ &  $\lnot p$  \\
+     \hline
+      $T$ & $F$ \\
+      $F$ & $T$ \\
+\end{tabular} \quad
+\begin{tabular}{c|c|c}
+     $p$ & $q$ & $p \land q$  \\
+     \hline
+     $T$ & $T$ & $T$ \\
+     $T$ & $F$ & $F$ \\
+     $F$ & $T$ & $F$ \\
+     $F$ & $F$ & $F$ \\
+\end{tabular} \\
+\begin{tabular}{c|c|c}
+     $p$ & $q$ & $p \lor q$  \\
+     \hline
+     $T$ & $T$ & $T$ \\
+     $T$ & $F$ & $T$ \\
+     $F$ & $T$ & $T$ \\
+     $F$ & $F$ & $F$ \\
+\end{tabular} \quad
+\begin{tabular}{c|c|c}
+     $p$ & $q$ & $p \rightarrow q$  \\
+     \hline
+     $T$ & $T$ & $T$ \\
+     $T$ & $F$ & $F$ \\
+     $F$ & $T$ & $T$ \\
+     $F$ & $F$ & $T$ \\
+\end{tabular} \quad
+\begin{tabular}{c|c|c}
+     $p$ & $q$ & $p \leftrightarrow q$  \\
+     \hline
+     $T$ & $T$ & $T$ \\
+     $T$ & $F$ & $F$ \\
+     $F$ & $T$ & $F$ \\
+     $F$ & $F$ & $T$ \\
+\end{tabular} .
+\end{center}
+\end{remark}
+
 \begin{example}
 What is the truth function of 
 \[ (((p \rightarrow q) \land (q \rightarrow (\lnot p))) \rightarrow (\lnot p)) \quad ? \]
