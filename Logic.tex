@@ -6,7 +6,7 @@
 \usepackage{lmodern}
 \usepackage{amsmath}
 \usepackage{amssymb}
-%\usepackage{showkeys}
+\usepackage{showlabels}
 \usepackage{amsthm}
 \usepackage{booktabs}
 \usepackage{graphicx}
@@ -65,6 +65,8 @@
 
 \section*{Preface}
 The following notes, are to be regarded as such -- notes. They should contain most of what is written down in the logic lecture at Imperial College London (2018) by professor Evans. More likely then not, there will be a considerable amount of spelling errors (--please report everything to email down below or in Github comments--) that hopefully do not alter any important meaning. These notes will be constantly reread (by you the readers as well as myself) so I hope that at the end of the term most errors will be corrected so that anybody reading this will find good lecture notes for the exam.
+
+\textbf{At the moment I still have problems with my labels so if you need to jump to a reference, just click on it}
 
 \textbf{Anybody willing to help me, can write me an email at \\
 \\ luka.ilic18@imperial.ac.uk} \\ \\ Help will only consist of being able to edit errors yourself. (So no need for any texing, except if you really want to.)
@@ -337,7 +339,7 @@ The formal system $L$ for propositional logic has:
     \item \textbf{deduction rule}: \emph{ Modus Ponens (MP)} from $\phi,  (\phi \rightarrow \psi)$ deduce $\psi$.
 \end{itemize}
 
-\begin{example}
+\begin{example} \label{rem:phi_implies_phi}
 
 Suppose $\phi$ is an $L$-formula. Then $\vdash_L (\phi \rightarrow \phi)$.
 A proof in $L$ could be as follows:
@@ -350,6 +352,89 @@ A proof in $L$ could be as follows:
 \end{enumerate}
 \end{example}
 \end{definition}
+
+\begin{definition}
+
+Suppose $\Gamma$ is a set of $L$- formulas. A deduction from $\Gamma$ is a finite sequence of formulas of $L$-formulas $\phi_1,\dots,\phi_n$ such that each one of these $\phi_i$ is either
+\begin{itemize}
+    \item an axiom
+    \item a formula in $\Gamma$ or
+    \item is obtained from previous formulas $\phi_1,\dots,\phi_{i-1}$ using the deduction rule (MP).
+\end{itemize}
+Write $\Gamma \vdash_L \phi$ if there is a deduction from $\Gamma$ ending in $\phi$.
+
+Say $\Gamma$ is a \emph{consequence} of $\Gamma$.
+\end{definition}
+
+\begin{remark}
+Being a consequence of the empty set ($\Gamma = \emptyset$) is the same as being a theorem of $L$. ($\emptyset \vdash_L \phi \Leftrightarrow \vdash_L \phi$)
+\end{remark}
+
+\begin{theorem}[Deduction Theorem.]\label{Th:deduction}
+Suppose $\Gamma$ is a set of $L$-formulas and $phi,\psi$ are $L$-formulas. Suppose
+    \[ \Gamma \cup \{\phi\} \vdash \psi \] then
+    \[ \Gamma \vdash_L (\phi \rightarrow \psi) \].
+\end{theorem}
+
+\begin{corollary}
+Suppose $\phi,\psi,\chi$ are $L$-formulas such that $ \vdash_L (\phi \rightarrow \psi)$ and $ \vdash_L (\psi \rightarrow \chi)$. Then $ \vdash_L (\phi \rightarrow \chi)$
+\end{corollary}
+
+\begin{proof}
+Use \ref{Th:deduction} with $\Gamma = \emptyset$: Show $\{\phi\} \vdash_L \chi$. Here is a deduction of $chi$ from $phi$:
+\begin{enumerate}
+    \item $(phi \rightarrow \psi)$ (theorem of $L$)
+    \item $(\psi \rightarrow \chi)$ (theorem of $L$)
+    \item $\phi$ (assumption)
+    \item $\psi$ (MP)
+    \item $\chi$ (MP).
+\end{enumerate}
+Thus $\{phi\} \vdash_L \chi$.
+By \ref{Th:deduction}: $\emptyset \vdash_L (\phi \rightarrow \chi)$ i.e. $ \vdash_L (\phi \rightarrow \chi) $.
+\end{proof}
+
+\begin{lemma}
+Suppose $\phi,\psi$ are $L$-formulas. Then
+\begin{enumerate}
+    \item $\vdash_L ((\lnot \psi) \rightarrow (\psi \rightarrow \phi))$.
+    \item $\{(\lnot \psi),\psi\} \vdash_L \phi$.
+    \item $\vdash_L (((\lnot \phi) \rightarrow \phi) \rightarrow \phi)$
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}
+    \item problem sheet 1.
+    \item by 1. and MP (twice)
+    \item Suppose $\chi$ is any formula. Then $\{(\lnot \phi),((\lnot \phi) \rightarrow \phi) \} \vdash_L \chi$\label{frm:1} (by MP and 2.) 
+    Let $\alpha$ be any axiom and let $\chi$ be $(\lnot \alpha)$.
+    Apply \ref{Th:deduction} to \ref{frm:1} to get:
+    \[ \{((\lnot \phi) \rightarrow \phi)\} \vdash_L ((\lnot \phi) \rightarrow (\lnot \alpha)) \]
+    A3: $(((\lnot \psi) \rightarrow ( \lnot \phi)) \rightarrow (\phi \rightarrow \psi))$ and MP generate:
+    \[ \{((\lnot \phi) \rightarrow \phi)\} \vdash_L ( \alpha \rightarrow \phi) \quad. \]
+    Since $\alpha$ is an axiom, by MP
+        \[ \{((\lnot \phi) \rightarrow \phi)\} \vdash_L \phi \] and the application of \ref{Th:deduction} gives us:
+        \[ \vdash_L (((\lnot \phi) \rightarrow \phi) \rightarrow \phi) \quad. \]
+\end{enumerate}
+
+\end{proof}
+
+\begin{proof}[Proof of \ref{Th:deduction}:]
+Suppose $\Gamma \cup \{\phi\} \vdash_L \psi$ using a deduction of length n. Show by induction on $n$ that $\Gamma \vdash_L (\phi \rightarrow \psi).$
+\begin{itemize}
+    \item[Base step:] $n = 1$. In this case $\phi$ is either an axiom or in $\Gamma$ or is $phi$. In the first two cases $\Gamma \vdash_L \phi$ (one line deduction!) Using the A1 axiom $(\psi \rightarrow (\phi \rightarrow \psi))$ and MP we obtain $\Gamma \vdash_L (\phi \rightarrow \psi)$.
+    In the last case -- that $\phi = \psi$ -- we alreadt know 
+     \[ \Gamma \vdash (\phi \rightarrow \phi) \text{ by (\ref{rem:phi_implies_phi}.)} \]
+    
+     \item[induction step:] In our deduction of $\psi$ from $\Gamma \cup \{\phi\}$ either $\psi$ is an axiom or $\psi$ is obtained from earlier steps using MP. In the last case these are formulas $\chi, (\chi \rightarrow \psi)$ earlier in the deduction.
+     in the first case we argue as in the base case to get $\Gamma \vdash_L (\phi \rightarrow \psi)$.
+     Otherwise we use the inductive hypothesis to get $$\Gamma \vdash_L (\phi \rightarrow \chi)$$ and 
+        \[ \Gamma \vdash_L (\phi \rightarrow (\chi \rightarrow \psi)). \]
+    We have the A2 axiom 
+        \[ ((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\psi \rightarrow \chi))) \]
+    Using the two formulas we obtained, this axiom and MP twice we obtain $\Gamma \vdash_L (\phi \rightarrow \psi)$ as required, completing the induction step.
+\end{itemize}
+\end{proof}
 
 
 
