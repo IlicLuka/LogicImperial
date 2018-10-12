@@ -22,7 +22,7 @@
 \newcommand{\R}{\mathbb R}
 \newcommand{\N}{\mathbb N}
 \newcommand{\E}{\mathcal E}
-\newcommand{\s}{\mathcal S}
+\newcommand{\J}{\mathcal J}
 
 \newcommand{\pmat}[1]{\begin{pmatrix}
 		#1
@@ -71,7 +71,7 @@ The following notes, are to be regarded as such -- notes. They should contain mo
 \textbf{Anybody willing to help me, can write me an email at \\
 \\ luka.ilic18@imperial.ac.uk} \\ \\ Help will only consist of being able to edit errors yourself. (So no need for any texing, except if you really want to.)
 
-This is a project for my fellow students, so I hope it will be appreciated and used. I wish everbody reading this a lot of fun with the following content.
+This is a project for my fellow students, so I hope it will be appreciated and used. I wish everybody reading this a lot of fun with the following content.
 
 \pagebreak
 
@@ -193,7 +193,7 @@ Note that by the remark above, we can boost these equivalences by substituting f
 
 \begin{definition}
 
-Say that a set of connectives is \emph{adequate} if for evry $n \geq 1$, every truth function of $n$ variables is the truth function of some formula which involves only connectives from the set and variables $p_1, \dots, p_n$.
+Say that a set of connectives is \emph{adequate} if for every $n \geq 1$, every truth function of $n$ variables is the truth function of some formula which involves only connectives from the set and variables $p_1, \dots, p_n$.
 \end{definition}
 
 \begin{theorem}\label{Th:connectives}
@@ -324,7 +324,7 @@ Write $\vdash_\Sigma \phi$ for `$\phi$ is a theorem of $\Sigma$`.
 \end{remark}
 
 \begin{definition}
-The formal system $L$ for propositional logic has:
+The formal system $L$ for propositional logic consists of:
 
 \begin{itemize}
     \item \textbf{Alphabet}: variables $p_1,p_2,p_3\dots$  connectives $\lnot,\rightarrow$
@@ -423,7 +423,7 @@ Suppose $\phi,\psi$ are $L$-formulas. Then
 Suppose $\Gamma \cup \{\phi\} \vdash_L \psi$ using a deduction of length n. Show by induction on $n$ that $\Gamma \vdash_L (\phi \rightarrow \psi).$
 \begin{itemize}
     \item[Base step:] $n = 1$. In this case $\phi$ is either an axiom or in $\Gamma$ or is $phi$. In the first two cases $\Gamma \vdash_L \phi$ (one line deduction!) Using the A1 axiom $(\psi \rightarrow (\phi \rightarrow \psi))$ and MP we obtain $\Gamma \vdash_L (\phi \rightarrow \psi)$.
-    In the last case -- that $\phi = \psi$ -- we alreadt know 
+    In the last case -- that $\phi = \psi$ -- we already know 
      \[ \Gamma \vdash (\phi \rightarrow \phi) \text{ by (\ref{rem:phi_implies_phi}.)} \]
     
      \item[induction step:] In our deduction of $\psi$ from $\Gamma \cup \{\phi\}$ either $\psi$ is an axiom or $\psi$ is obtained from earlier steps using MP. In the last case these are formulas $\chi, (\chi \rightarrow \psi)$ earlier in the deduction.
@@ -436,6 +436,101 @@ Suppose $\Gamma \cup \{\phi\} \vdash_L \psi$ using a deduction of length n. Show
 \end{itemize}
 \end{proof}
 
+\subsection{soundness and completeness of L}
 
+\begin{theorem}[soundness of L] \label{Th:soundness}
+Suppose $\phi$ is a theorem of $L$. Then $\phi$ is a tautology.
+\end{theorem}
+\begin{remark}[notation]
+ A (propositional) \emph{valuation} $v$ is an assignment of truth values to the propositional variables $p_1,p_2,\dots$ .
+ So $v(p_i) \in \{ T, F \}$ (for $i \in \N)$.
+ Note that, using the truth table rules, this assigns a truth value $v(\phi) \in \{ T, F \}$ to every $L$-formula $\phi$.
+\end{remark}
+
+\begin{proof}[proof of \ref{Th:soundness}:] By the induction on the length of a proof of $\phi$ it is enough to show:
+\begin{enumerate}
+    \item every axiom is a tautology;
+    \item MP preserves tautologies. I.e. if $\psi,(\psi \rightarrow \chi)$ are tautologies, then so is $\chi$.
+\end{enumerate}
+For 1. use truth tables or argue as follows:
+\begin{itemize}
+    \item [A2] Suppose for 1. if there is a valuation $v$ with \[ v(((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\psi \rightarrow \chi)))) = F \]
+    Then \[ v((\phi \rightarrow (\psi \rightarrow \chi))) = T \] and 
+        \[ v(((\phi \rightarrow \psi) \rightarrow (\psi \rightarrow \chi))) = F \]
+    
+    $v((\phi \rightarrow \psi) = T$ and $v((\phi \rightarrow \chi)) = F$
+    So by the last equality $v(\phi) = T, v(\chi) = F$ and also $(\psi) = T$ which contradicts the first equation.
+    \item[A1] exercise
+    \item[A3] exercise
+\end{itemize}
+For 2. if $v$ is a valuation and $v(\psi) = T + v(\psi \rightarrow \chi) = T$ then $v(\chi) = T$.
+
+\end{proof}
+
+\begin{theorem}[Generalization of soundness]
+
+Suppose $\Gamma$ is a set of formulas and $\phi$ is a formula with $\Gamma \vdash_L \phi$. Suppose $v$ is a valuation with $v(\phi) = T$ for all $\phi \in \Gamma$. Then $v(\phi) = T$.
+\end{theorem}
+\begin{proof}
+exercise
+\end{proof}
+
+\begin{theorem}[Completeness Theorem for L.]
+Suppose $\phi$ is a tautology. Then $\vdash_L \phi$.
+
+\end{theorem}
+
+\begin{remark}[steps in the proof]
+\begin{enumerate}
+    \item 
+ If $v(\phi) = T$ for all valuations $v$ -- we want to show $\vdash_L \phi$.
+    \item Try to prove a generalization: Suppose that for every $v$ with $v(\Gamma) = T$ (i.e. $v(\phi) = T \forall \phi \in \Gamma$) we have $v(\phi) = T$. Then $\Gamma \vdash_L \phi$.
+    \item Equivalently, if $\Gamma \not \vdash_L \phi$ show there is a valuation $v$ with $v(\Gamma) = T$ and $v(\phi) = F$.
+\end{enumerate}
+\end{remark}
+
+\begin{definition}
+A set $\Gamma$ of $L$- formulas is \emph{consistent} if there is no $L$-formula $\phi$ with
+    \[Gamma \vdash_L \phi \text{ and } \Gamma \vdash_L (\lnot \phi) \quad . \]
+\end{definition}
+
+\begin{proposition}
+Suppose $\Gamma$ is a consistent set of $L$-formulas and $\Gamma \not \vdash_L \phi$. Then $\Gamma \cup \{(\lnot \phi)\}$ is consistent.
+\end{proposition}
+\begin{proof}
+Suppose not. So there is some formula $\psi$ with
+\[ \Gamma \cup \{(\lnot \phi) \} \vdash_L \psi \] and
+\[ \Gamma \cup \{(\lnot \phi) \} \vdash_L (\lnot \psi) \]
+Apply \ref{Th:deduction} to the second line above, then
+\[ \Gamma \vdash_L ((\lnot \phi) \rightarrow (\lnot \psi)). \]
+By A3 and MP we obtain
+\[ \Gamma \vdash_L (\psi \rightarrow \psi). \]
+Then $\Gamma \cup \{(\lnot \phi) \} \vdash_L \phi$. By \ref{Th:deduction}: 
+\[ \Gamma \vdash_L ((\lnot \phi) \rightarrow (\lnot \phi)  \]
+and by a result from above
+    \[ \vdash_L (((\lnot \phi) \rightarrow \phi) \rightarrow \phi) \]
+So by this, $ \Gamma \vdash_L ((\lnot \phi) \rightarrow (\lnot \phi)$   and Modus Ponens we obtain
+\[ \Gamma \vdash_L \phi. \]
+This contradicts $\Gamma \not \vdash_L \phi$.
+\end{proof}
+
+\begin{proposition}[Lindenbaum Lemma]
+Suppose $\Gamma$ is a consistent set of $L$-formulas. Then there is a consistent set of formulas
+$ \Gamma^* \supseteq \Gamma$ such that for every $\phi$ either
+    \[\Gamma^* \vdash_L \phi \] or
+    \[\Gamma^* \vdash_L (\lnot \phi)\]
+    (sometimes say $\Gamma^*$ is \emph{complete}.) 
+\end{proposition}
+
+\begin{proof}
+The set of all $L$-formulas is \emph{countable}, so we can list the $L$-formulas as $\phi_0,\phi_1,\dots$.
+(Why countable? Alphabet is countable: $\lnot, \rightarrow,),(,p_1,p_2,\dots$. Formulas are finite sequences from this alphabet, hence only countably many.)
+Define inductively sets of $L$-formulas $\Gamma_0 \subseteq \Gamma_1 \subseteq \Gamma_2\subseteq \dots$, where 
+\[ \Gamma_0 = \Gamma\] and \[\Gamma^* = \bigcup_{i \in \N}\]. Suppose $\Gamma_n$ has been defined. If $\Gamma_n \vdash_L \phi_n$ then let $\Gamma_{n+1} := \Gamma_n$.
+Otherwise, if $\Gamma_n \not \vdash_L \phi_n$ then let $\Gamma_{n+1} := \Gamma_n \cup \{(\lnot \phi_n)\}$. An easy induction using \ref{Th:soundness} shows that each $\Gamma_i$ is consistent.
+Claim: $\Gamma^*$ is consistent.
+If $\Gamma^* \vdash_L \phi$ and $\Gamma^* \vdash_L (\lnot \phi$ then as deductions are finite sequences of $L$ -formulas \[ \Gamma_n \vdash_L \phi \text{ and } \Gamma_n \vdash_L (\lnot \phi) \] for some $n \in \N$: contradiction.
+Let $\phi$ be any formula. So $\phi = \phi_n$ for some $n \in \N$...
+\end{proof}
 
 \end{document}
