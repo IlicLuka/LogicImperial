@@ -447,7 +447,7 @@ Suppose $\phi$ is a theorem of $L$. Then $\phi$ is a tautology.
  Note that, using the truth table rules, this assigns a truth value $v(\phi) \in \{ T, F \}$ to every $L$-formula $\phi$.
 \end{remark}
 
-\begin{proof}[proof of \ref{Th:soundness}:] By the induction on the length of a proof of $\phi$ it is enough to show:
+\begin{proof}[Proof of \ref{Th:soundness}:] By the induction on the length of a proof of $\phi$ it is enough to show:
 \begin{enumerate}
     \item every axiom is a tautology;
     \item MP preserves tautologies. I.e. if $\psi,(\psi \rightarrow \chi)$ are tautologies, then so is $\chi$.
@@ -491,10 +491,10 @@ Suppose $\phi$ is a tautology. Then $\vdash_L \phi$.
 
 \begin{definition}
 A set $\Gamma$ of $L$- formulas is \emph{consistent} if there is no $L$-formula $\phi$ with
-    \[Gamma \vdash_L \phi \text{ and } \Gamma \vdash_L (\lnot \phi) \quad . \]
+    \[\Gamma \vdash_L \phi \text{ and } \Gamma \vdash_L (\lnot \phi) \quad . \]
 \end{definition}
 
-\begin{proposition}
+\begin{proposition}\label{TH:extension}
 Suppose $\Gamma$ is a consistent set of $L$-formulas and $\Gamma \not \vdash_L \phi$. Then $\Gamma \cup \{(\lnot \phi)\}$ is consistent.
 \end{proposition}
 \begin{proof}
@@ -526,11 +526,12 @@ $ \Gamma^* \supseteq \Gamma$ such that for every $\phi$ either
 The set of all $L$-formulas is \emph{countable}, so we can list the $L$-formulas as $\phi_0,\phi_1,\dots$.
 (Why countable? Alphabet is countable: $\lnot, \rightarrow,),(,p_1,p_2,\dots$. Formulas are finite sequences from this alphabet, hence only countably many.)
 Define inductively sets of $L$-formulas $\Gamma_0 \subseteq \Gamma_1 \subseteq \Gamma_2\subseteq \dots$, where 
-\[ \Gamma_0 = \Gamma\] and \[\Gamma^* = \bigcup_{i \in \N}\]. Suppose $\Gamma_n$ has been defined. If $\Gamma_n \vdash_L \phi_n$ then let $\Gamma_{n+1} := \Gamma_n$.
-Otherwise, if $\Gamma_n \not \vdash_L \phi_n$ then let $\Gamma_{n+1} := \Gamma_n \cup \{(\lnot \phi_n)\}$. An easy induction using \ref{Th:soundness} shows that each $\Gamma_i$ is consistent.
-Claim: $\Gamma^*$ is consistent.
-If $\Gamma^* \vdash_L \phi$ and $\Gamma^* \vdash_L (\lnot \phi$ then as deductions are finite sequences of $L$ -formulas \[ \Gamma_n \vdash_L \phi \text{ and } \Gamma_n \vdash_L (\lnot \phi) \] for some $n \in \N$: contradiction.
-Let $\phi$ be any formula. So $\phi = \phi_n$ for some $n \in \N$...
+\[ \Gamma_0 = \Gamma\] and \[\Gamma^* = \bigcup_{i \in \N} \quad .\] Suppose $\Gamma_n$ has been defined. If $\Gamma_n \vdash_L \phi_n$ then let $\Gamma_{n+1} := \Gamma_n$.
+Otherwise, if $\Gamma_n \not \vdash_L \phi_n$ then let $\Gamma_{n+1} := \Gamma_n \cup \{(\lnot \phi_n)\}$. An easy induction using \ref{TH:extension} shows that each $\Gamma_i$ is consistent.
+\\
+\textbf{Claim:}: $\Gamma^*$ is consistent.
+If $\Gamma^* \vdash_L \phi$ and $\Gamma^* \vdash_L (\lnot \phi)$ then as deductions are finite sequences of $L$ -formulas \[ \Gamma_n \vdash_L \phi \text{ and } \Gamma_n \vdash_L (\lnot \phi) \] for some $n \in \N$: contradiction.
+Now to show that $\Gamma^*$ is complete, let $\phi$ be any formula. So $\phi = \phi_n$ for some $n \in \N$. If $\Gamma^* \not \vdash_L \phi$ then $\Gamma_n \not \vdash_L \phi$. So by construction $\Gamma_{n+1} \vdash_L (\lnot \phi)$. Therefore $\Gamma^* \vdash_L (\lnot \phi)$ and since $\phi$ was arbotrary this proves the statement.
 \end{proof}
 
 \end{document}
