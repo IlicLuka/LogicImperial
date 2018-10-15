@@ -518,7 +518,7 @@ This contradicts $\Gamma \not \vdash_L \phi$.
 Suppose $\Gamma$ is a consistent set of $L$-formulas. Then there is a consistent set of formulas
 $ \Gamma^* \supseteq \Gamma$ such that for every $\phi$ either
     \[\Gamma^* \vdash_L \phi \] or
-    \[\Gamma^* \vdash_L (\lnot \phi)\]
+    \[\Gamma^* \vdash_L (\lnot \phi) \quad . \]
     (sometimes say $\Gamma^*$ is \emph{complete}.) 
 \end{proposition}
 
@@ -526,12 +526,84 @@ $ \Gamma^* \supseteq \Gamma$ such that for every $\phi$ either
 The set of all $L$-formulas is \emph{countable}, so we can list the $L$-formulas as $\phi_0,\phi_1,\dots$.
 (Why countable? Alphabet is countable: $\lnot, \rightarrow,),(,p_1,p_2,\dots$. Formulas are finite sequences from this alphabet, hence only countably many.)
 Define inductively sets of $L$-formulas $\Gamma_0 \subseteq \Gamma_1 \subseteq \Gamma_2\subseteq \dots$, where 
-\[ \Gamma_0 = \Gamma\] and \[\Gamma^* = \bigcup_{i \in \N} \quad .\] Suppose $\Gamma_n$ has been defined. If $\Gamma_n \vdash_L \phi_n$ then let $\Gamma_{n+1} := \Gamma_n$.
+\[ \Gamma_0 = \Gamma\] and \[\Gamma^* = \bigcup_{i \in \N} \Gamma_i \quad .\] Suppose $\Gamma_n$ has been defined. If $\Gamma_n \vdash_L \phi_n$ then let $\Gamma_{n+1} := \Gamma_n$.
 Otherwise, if $\Gamma_n \not \vdash_L \phi_n$ then let $\Gamma_{n+1} := \Gamma_n \cup \{(\lnot \phi_n)\}$. An easy induction using \ref{TH:extension} shows that each $\Gamma_i$ is consistent.
 \\
 \textbf{Claim:}: $\Gamma^*$ is consistent.
 If $\Gamma^* \vdash_L \phi$ and $\Gamma^* \vdash_L (\lnot \phi)$ then as deductions are finite sequences of $L$ -formulas \[ \Gamma_n \vdash_L \phi \text{ and } \Gamma_n \vdash_L (\lnot \phi) \] for some $n \in \N$: contradiction.
-Now to show that $\Gamma^*$ is complete, let $\phi$ be any formula. So $\phi = \phi_n$ for some $n \in \N$. If $\Gamma^* \not \vdash_L \phi$ then $\Gamma_n \not \vdash_L \phi$. So by construction $\Gamma_{n+1} \vdash_L (\lnot \phi)$. Therefore $\Gamma^* \vdash_L (\lnot \phi)$ and since $\phi$ was arbotrary this proves the statement.
+Now to show that $\Gamma^*$ is complete, let $\phi$ be any formula. So $\phi = \phi_n$ for some $n \in \N$. If $\Gamma^* \not \vdash_L \phi$ then $\Gamma_n \not \vdash_L \phi$. So by construction $\Gamma_{n+1} \vdash_L (\lnot \phi)$. Therefore $\Gamma^* \vdash_L (\lnot \phi)$ and since $\phi$ was arbitrary this proves the statement.
 \end{proof}
 
+\begin{lemma} \label{LM:valuation}
+Let $\Gamma^*$ be as above, then there is a valuation $v$ such that for every $L$-formula $\phi$
+    \[ v(\phi) = T \Leftrightarrow \Gamma^* \vdash_L \phi \]
+\end{lemma}
+
+\begin{corollary}
+ Suppose $\Delta$ is a set of $L$-formulas which is consistent and 
+    \[\Delta \not \vdash_L \phi \quad . \]
+    Then there is a valuation $v$ with 
+        \[ v(\Delta) = T \text{ and } v(\phi) = F \quad. \]
+\end{corollary}
+
+\begin{proof}
+ Let $\Gamma:= \Delta \cup \{ (\lnot \phi) \}$. By \ref{TH:extension}, $\Gamma$ is consistent. By the Lindenbaum lemma there is $\Gamma^*  \supseteq \Gamma$ which is consistent and such that for every $\chi$ either $\Gamma^* \vdash_L \chi \text{ or } \Gamma^* \vdash_L \lnot \chi$. By \ref{LM:valuation} there exists a valuation with $v(\Gamma^*) = T$. In particular $v(\Delta) = T$ and $v((\lnot \phi)) = T$ thus $v(\phi) = F$.
+\end{proof}
+
+\begin{theorem}[completeness/Adequacy theorem for $L$]\label{Th:completenessL}
+If $v(\phi) = T$ for every valuation $v$, then $\vdash_L \phi$.
+\end{theorem}
+
+\begin{proof}
+ Suppose $\not \vdash_L \phi $. then apply the corollary above with $\Delta = \emptyset$. (Why is this consistent? Soundness Theorem.) There is a valuation with $v(\phi) = F$.
+\end{proof}
+
+\begin{proof}[Proof of \ref{LM:valuation}.]
+ $\Gamma^*$ consistent set of $L$-formulas such that for every $L$-formula $\phi$ either $\Gamma^* \vdash_L \phi$ or $\Gamma^* \vdash_L \lnot \phi$. Want valuation $v$ with $v(\phi)= T$ for all $\phi \in \Gamma^*$. (i.e. $v(\phi) = T \Leftrightarrow \Gamma^* \vdash_L \phi$.)
+ Note that for each variable $p_i$ either $\Gamma^* \vdash_l p_i$ or $\Gamma^* \vdash_L (\lnot p_i)$. So let $v$ be the valuation with $v(p_i) = T \Leftrightarrow \Gamma^* \vdash_L p_i$.
+ Now, prove by induction on the length of $\phi$ that $v(\phi) = T \Leftrightarrow \Gamma^* \vdash_L \phi$.
+ 
+ \begin{itemize}
+     \item[Base case:] $\phi$ is just a propositional variable -- this case holds by the definition of $v$.
+     \item[inductive step:]
+     \textbf{Case 1:} $\phi$ is $(\lnot \psi)$.
+     "$\Rightarrow$": $v(\phi) = T$ then $v(\psi) = F$ and by the induction hypothesis $\Gamma^* \not \vdash_L \psi$. Then by the completeness of $\Gamma^*$, $\Gamma^* \vdash_L (\lnot \psi)$ i.e. $\Gamma^* \vdash_L \phi$.
+     "$\Leftarrow$": Suppose $\Gamma^* \vdash_L \phi$. By consistency $\Gamma^* \not \vdash_L \psi $. By the induction hypothesis $v(\psi) = F$. As $v$ is a valuation we obtain $v(\phi) = T$ which concludes the first case. \\
+     \textbf{Case 2:} $\phi$ is $(\psi \rightarrow \chi)$.
+     "$\Rightarrow$": Suppose $v(\phi) = F$. Then $v(psi) = T$ and $v(\chi) = F$. By the induction hypothesis $\Gamma^* \vdash_L \psi$ and $\Gamma^* \not \vdash_L \chi$. If
+        \[ \Gamma^* \vdash_L \phi \] then using modus ponens and$\Gamma^* \vdash \psi$ we obtain 
+        \[\Gamma^* \vdash_L \chi\] which is a contradiction. So $\Gamma^* \not \vdash_L \phi$.
+    "$\Leftarrow$": Suppose $\Gamma^* \not \vdash_L (\psi \rightarrow \chi) $. Then $\Gamma^* \not \vdash \chi$ (due to A1).
+    Also, due to a result from above, $\Gamma^* \not \vdash_L (\lnot \psi)$. By combining these results we obtain $v(\chi) = F$ and $v(\psi) = T$ therefore $v(\phi) = F$ which concludes the induction step.
+ \end{itemize}
+\end{proof}
+
+\begin{corollary}
+ Suppose $\Delta$ is a set of $L$-formulas and $\phi$ is an $L$-formula. Then
+ \begin{enumerate}
+     \item $\Delta$ is consistent if and only if there is a valuation $v$ with $v(\Delta) =T$.
+     \item $\Delta \vdash_L \phi$ if and only if for every valuation $v$ with $v(\Delta) = T$
+ \end{enumerate} we have $v(\phi) = T$.
+\end{corollary}
+\begin{proof}
+ Exercise -- deduce these from the preliminaries to \ref{Th:completenessL}. Warning: in the second statement $\Delta$ is not necessarily consistent.
+\end{proof}
+
+\begin{theorem}[Compactness Theorem for L]
+Suppose $\Delta$ is a set of $L$-formulas. The following are equivalent:
+\begin{enumerate}
+    \item There is a valuation $v$ with $v(\Delta) = T$.
+    \item For every finite subset $\Delta_0 \subseteq \Delta$ there us a valuation $w$ with $w(\Delta_0) = T$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+By the above corollary, the first is true iff $\Delta$ is consistent.
+Similarly the second holds iff every finite subset is consistent.
+But if $\Delta \vdash_L \phi$ and $\Delta \vdash_L (\lnot \phi)$ then as deductions are finite (+ therefore only involves finitely many $L$-formulas in $\Delta$), for some finite $\Delta_0 \subseteq \Delta$, $\Delta_0 \vdash_L \phi$ and $\Delta_0 \vdash_L (\lnot \phi)$.
+\end{proof}
+
+\begin{exercise}
+Let $P$ be the set of sequences of 
+\end{exercise}
 \end{document}
