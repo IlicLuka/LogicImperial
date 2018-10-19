@@ -606,4 +606,91 @@ But if $\Delta \vdash_L \phi$ and $\Delta \vdash_L (\lnot \phi)$ then as deducti
 \begin{exercise}
 Let $P$ be the set of sequences of 
 \end{exercise}
+
+\section{Predicate Logic}
+also called first-order logic
+Plan :
+\begin{enumerate}
+    \item introduce mathematical objects that this logic can reason about. I.e. \emph{First-order structures}
+    \item introduce the formulas. I.e. \emph{First order languages}
+    \item describe  formal system
+    \item show that the theorems of the formal system are exactly the formulas true in all structures. (Goedel Completeness Theorem
+\end{enumerate}
+
+\subsection{Structures}
+
+\begin{definition}
+    Suppose $A$ is a set and $n in \N$, An \emph{$n$-ary relation} of $A$ is a subset $\overline{R} \subseteq A^n$.
+    An \emph{$n$-ary function} on $A$ is a function $\overline{f}: A^n \rightarrow A$.
+\end{definition}
+
+\begin{example}
+\begin{enumerate}
+    \item ordering $\leq$ on $\N$ is $2$-ary relation on $\N$.
+    \item addition, multiplication are $2$-ary functions on their respective sets.
+    \item a $1$-ary relation is just a subset. (even numbers in $\N$, etc.)
+\end{enumerate}
+
+\textbf{Notation:} If $R \subseteq A^n$ is an $n$-ary relation, then we write $R(a_1,\dots,a_n)$ for $(a_1,\dots,a_n) \in R$.
+
+\begin{definition}
+    A \emph{first-order structure} $\mathcal{A}$ consists of:
+    \begin{enumerate}
+        \item A nonempty set A (the \emph{domain} of $\mathcal{A}$
+        \item A set $\{\overline{R}_i:i \in I \}$ of \emph{relations} on $A$.
+        \item A set $\{\overline{f}_j:j \in J \}$ of \emph{functions} on $A$.
+        \item A set $\{\overline{c}_k:k \in K \}$ of \emph{constants} in $A$. ($c_k \in A$)
+    \end{enumerate}
+\end{definition}
+\begin{remark}
+The sets $I,J,K$ can be empty and are indexing sets (usually subsets of $N$).
+The information 
+\[ (n_i : i \in I), (m_j : j \in J), K \] is called the \emph{signature} of $\mathcal{A}$.
+Might denote the structure by
+\[ \mathcal{A}=\langle A; (\overline{R}_i : i \in I), (\overline{f}_j : j \in J), (\overline{c}_k : k \in K) \rangle \]
+\end{remark}
+\end{example}
+
+\begin{example}
+\begin{enumerate}
+    \item \emph{Orderings}
+    $A = \N, \mathbb{Q}, \R $ and $I = \{1\},J=K=\emptyset$, $n_i = 2$. and $\overline{R}_1(a,b)$ means $a\leq b$.
+    \item \emph{Groups}
+    The domain is just the underlying set of the group and we take the signature: $\overline{R},\overline{m},\overline{i},\overline{e}$, where the first is the $2$-ary relation of equality, then multiplication, inversion and the neutral element.
+    \item \emph{Groups}
+    The domain is just the underlying set of the group and we take the signature: $\overline{R},\overline{m},\overline{a},\overline{i},\overline{0},\overline{1}$, where the first is the $2$-ary relation of equality, then multiplication, addition, subtraction and the neutral elements for addition and multiplication.
+    \item \emph{Graphs}
+    $A = V$ a set of vertices, a binary relation $\overline{E} \subseteq A^2$ the set of vertices (connected elements) and again the binary relation $\overline{R}$ for equality.
+\end{enumerate}
+\end{example}
+
+\subsection{First-order languages}
+\begin{definition}
+    A \emph{first-order-language} $\mathcal{L}$ has an alphabet of symbols of the following types:
+    \begin{enumerate}
+        \item \emph{variables}: $x_0,x_1,x_2,\dots$
+        \item \emph{punctuation}: $),(,\quad ,$ (the comma is a symbol as well)
+        \item \emph{connectives}: $\lnot, \rightarrow$
+        \item \emph{quantifier}: $\forall$
+        \item \emph{relation symbols}: $R_i$ $i \in I$
+        \item \emph{function symbols}: $f_j$ $j \in J$
+        \item \emph{constant symbols}: $c_k$ $k \in K$
+    \end{enumerate}
+    Here $I,J,K$ are indexing sets (can once again be empty). Each $R_i$ comes equipped with an \emph{arity} $n_i$; each $f_j$ comes equipped with an arity $m_j$.
+    The information 
+    \[ (n_i : i \in I), (m_j : j \in J), K \] is called the \emph{signature} of $\mathcal{L}$.
+    A first order structure $\mathcal{A}$ with the same signature as $\mathcal{L}$  is referred to as an \emph{$\mathcal{L}$-structure}.
+\end{definition}
+
+\begin{definition}
+    A \emph{term} of $\mathcal{L}$ is defined as follows:
+    \begin{enumerate}
+        \item any variable is a term
+        \item any constant symbol is a term
+        \item if $f$ is an $n$-ary function symbol of $\mathcal{L}$ and $t_1,\dots,t_n$ are terms, then
+        \[ f(t_1,\dots,t_n) \] is a term.
+        \item any term arises in this way.
+    \end{enumerate}
+\end{definition}
+
 \end{document}
