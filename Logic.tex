@@ -21,8 +21,9 @@
 
 \newcommand{\R}{\mathbb R}
 \newcommand{\N}{\mathbb N}
-\newcommand{\E}{\mathcal E}
+\newcommand{\LL}{\mathcal L}
 \newcommand{\J}{\mathcal J}
+\newcommand{\A}{\mathcal A}
 
 \newcommand{\pmat}[1]{\begin{pmatrix}
 		#1
@@ -657,7 +658,7 @@ Might denote the structure by
     $A = \N, \mathbb{Q}, \R $ and $I = \{1\},J=K=\emptyset$, $n_i = 2$. and $\overline{R}_1(a,b)$ means $a\leq b$.
     \item \emph{Groups}
     The domain is just the underlying set of the group and we take the signature: $\overline{R},\overline{m},\overline{i},\overline{e}$, where the first is the $2$-ary relation of equality, then multiplication, inversion and the neutral element.
-    \item \emph{Groups}
+    \item \emph{Rings}
     The domain is just the underlying set of the group and we take the signature: $\overline{R},\overline{m},\overline{a},\overline{i},\overline{0},\overline{1}$, where the first is the $2$-ary relation of equality, then multiplication, addition, subtraction and the neutral elements for addition and multiplication.
     \item \emph{Graphs}
     $A = V$ a set of vertices, a binary relation $\overline{E} \subseteq A^2$ the set of vertices (connected elements) and again the binary relation $\overline{R}$ for equality.
@@ -692,5 +693,163 @@ Might denote the structure by
         \item any term arises in this way.
     \end{enumerate}
 \end{definition}
+
+\begin{definition}
+\begin{enumerate}
+    \item An \emph{atomic formula} of $\LL$ is of the form $ R(t_1,\dots,t_n) $, where $R$ is a $n$-ary relation symbol of $\LL$ and $t_1,\dots,t_n$ are terms.
+    \item the \emph{formulas} of $\LL$ are defined as follows:
+    \begin{enumerate}
+        \item any atomic formula is a formula
+        \item if $\phi,\psi$ are $\LL$ formulas, then 
+        \[ (\lnot \phi), (\phi \rightarrow \psi), (\forall x) \phi \]
+        are $\LL$-formulas, where $x$ is any variable.
+        \item every formula arises this way.
+    \end{enumerate}
+\end{enumerate}
+\end{definition}
+\begin{example}
+Suppose $\LL$ has 
+\begin{itemize}
+    \item $2$-ary function symbol $f$,
+    \item $1$-ary relation symbol $P$,
+    \item $2$-ary relation symbol $R$,
+    \item constants $c_1,c_2,\dots$
+\end{itemize}
+Some terms: 
+\[ x,c,f(x_1,c_1) ,f(f(x_1,c_1),x_2), \dots \]
+Some atomic formulas:
+\[ P(x_1),R(f(x_1,c_1),c_2), etc. \]
+Some formulas:
+$\dots$
+\end{example}
+
+
+\begin{definition}
+Suppose $\phi,\psi$ are $\LL$-formulas, then
+\[ (\exists x) \phi \text{ means } (\lnot (\forall x) (\lnot \phi) \]
+and the other shorthands as in the propositional logic.
+\end{definition}
+
+\begin{definition}
+Suppose $\LL$ is a first-order language with relation,function and constant symbols
+\begin{itemize}
+    \item $R_i$ (of arity $n_i$) for $i \in I$
+    \item $R_i$ (of arity $m_j$) for $j \in J$
+    \item $c_k$ for $k \in K$.
+\end{itemize}
+An \emph{$\LL$-structure} is a structure 
+\[ \mathcal{A} = \big \langle A, (\overline{R}_i : i\in I), (\overline{f}_j : j\in J), (\overline{c}_k : k\in K) \big \rangle \] of the same signature as $\LL$.
+There is a correspondence between the relation, function and constant symbols and the actual relations, functions and constants in $\mathcal{A}$. THis correspondence, or $\mathcal{A}$ itself, is called an \emph{interpretation} of $\LL$.
+\end{definition}
+
+\begin{definition}
+With the same notation as above, suppose $\mathcal{A}$ is an $\LL$-structure. A \emph{valuation in $$\mathcal{A}$$} is a function $v$ from the set of terms on $\LL$ to A satisfying:
+\begin{itemize}
+    \item[a] $v(c_k) = \overline{c}$
+    \item[b] if $t_1,\dots, t_m$ are terms of $\LL$ and $f$ is an $m$-ary function symbol, then $v(f(t_1,\dots,t_m)) = \overline{f}(v(t_1),\dots,v(t_m))$ where $\overline{f}$ is the interpretation of $f$ in $\mathcal{A}$.
+\end{itemize}
+\end{definition}
+
+\begin{lemma}
+Suppose $\mathcal{A}$ is an $\LL$-structure and $a_0,a_1,\dots \in A$. Then there is a unique valuation $v$ in $\mathcal{A}$ with $v(x_l) =a_l$ for all $l \in \N$.
+($x_0,x_1,\dots$ are the variables of $\LL$)
+\end{lemma}
+
+\begin{proof}
+By induction on the length of terms: show that if we let
+\begin{enumerate}
+    \item $v(x_l) = a_l$ for all $l \in \N$.
+    \item $v(c_k) = \overline{c}_k$ for all $k \in K$.
+    \item $v(f(t_1,\dots,t_m) = \overline{f}(v(t_1),\dots,v(t_m))$
+\end{enumerate}
+then $v$ is a well-defined valuation. (rest exercise).
+\end{proof}
+
+\begin{example}
+Groups:  The domain is just the underlying set of the group and we take the signature: $\overline{R},\overline{m},\overline{i},\overline{e}$, where the first is the $2$-ary relation of equality, then multiplication, inversion and the neutral element.
+Let $\mathcal{G}$ be a group and $g,h \in \mathcal{G}$. Let $v$ be a valuation with $ v(x_0) = g, v(x_1)=h$. Then 
+\[ v(m(m(x_0,x_1),i(x_0))) = \overline{m}(v(m(x_0,x_1)),v(i(x_0)) = \dots = ghg^{-1} \]
+\end{example}
+
+\begin{definition}
+ Suppose $\mathcal{A}$ is an $\LL$ structure and $x_l$ is any variable. Suppose $v,w$ are valuations in $\mathcal{A}$. We say that $v,w$ are \emph{$x_l$-equivalent} if $v(x_m) = w(x_m)$ whenever $m \neq l$.
+\end{definition}
+
+\begin{definition}
+ Suppose $\mathcal{A}$ is an $\LL$-structure and $v$ is a valuation in $\mathcal{A}$.
+ Define, for an $\LL$-formula $\phi$, what is meant by \\
+\emph{$v$ satisfies $\phi$ in $\mathcal{A}$},
+\begin{enumerate}
+    \item \underline{atomic formulas}
+    Suppose $R$ is an $n$-ary relation symbol and $t_1,\dots,t_n$ are terms of $\LL$. Then $v$ satisfies the atomic formula $R(t_1,\dots,t_n)$ if and only if $\overline{R}(v(t_1),\dots,v(t_n))$ holds in $\mathcal{A}$.
+    \item \underline{$\LL$-formulas}
+    Suppose that $\phi,\psi$ are $\LL$ formulas and we already know about valuations satisfying $\phi,\psi$. Then
+    \begin{itemize}
+        \item $v$ satisfies $(\lnot \phi) $ iff $v$ does not satisfy $\phi$ in $\mathcal{A}$.
+        \item $v$ satisfies $(\phi \rightarrow \psi)$ in $\mathcal{A}$ iff it is not the case that $v$ satisfies $\phi$ and $v$ does not satisfy $\psi$.
+        \item $v$ satisfies $\dots$
+    \end{itemize}
+\end{enumerate}
+\end{definition}
+
+\begin{remark}
+The definition above does not work, if the structure is empty. (So we will not allow it).
+
+If $v$ satisfies $\phi$, write $v[\phi] = T$. Otherwise write $v[\phi]=F$.
+
+If every valuation in $\A$ satisfies $\phi$ then we say that $\phi$ is \emph{true} in $\A$, or $\A$ is \emph{a model of} $\phi$ ($\A \vDash \phi$).
+
+If $\A \vDash \phi$ for every $\LL$-structure $\A$, we say that $\phi$ is \emph{logically valid} and write $\vDash \phi$.
+-- These are analogues of tautologies in the propositional logic. Difference: In propositional logic there is an algorithm to decide whether a given formula is a tautology. There is \emph{no} such algorithm to decide whether a given $\LL$-formula is logically valid or not. -- Consequence of the Goedel Incompleteness Theorem.
+\end{remark}
+
+\begin{example}
+\begin{enumerate}
+    \item Suppose $\LL$ has a binary relation symbol $R$. The $\LL$-formula 
+            \[ R(x_1,x_2) \rightarrow (R(x_2,x_3) \rightarrow R(x_1,x_3))) \]
+        is true in $\A = \langle \N; < \rangle $, where $ < $ is the interpretation of $R$.
+        If the formula is not true, then there is a valuation $v$ such that $v$ satisfies $R(x_1,x_2)$ and $v$ does not satisfy $R(x_2,x_3) \rightarrow R(x_1,x_3)$. So $v[R(x_2,x_3) = T$ and $v[R(x_1,x_3)]=F$. Let $v(x_i) = a_i \quad \in \N$. So 
+            \[ a_1 < a_2 \quad a_2 \ a_3 \quad a_1 \not < a_3 \] 
+        which is impossible since $<$ is transitive on $\N$.
+    \item The same formula is not true in the structure $\mathcal{B}$ with domain     $\N$ where we interpret $R(x_i,x_j)$ as $x_i \neq x_j$. Take a valuation      in $\mathcal{B}$ with $v(x_1) = 1 = v(x_3)$ and $v(x_2) = 2$.
+    \item Lemma: Suppose $\A$ is an $\LL$-structure and $\phi$ an $\LL$-formula. Let $v$ be a valuation in $\A$, then:
+        $v$ satisfies $(\exists x_1) \phi $ (in $\A$) if and only if there is a valuation $w$ which is $x_1$ equivalent to $v$ such that $w$ satisfies $\phi$.
+        \begin{proof}
+        "$\Rightarrow$" Suppose $v$ satisfies $(\lnot ( \forall x_1) (\lnot \phi))$. Hence $v$ does not satisfy $(\forall x_1) (\lnot \phi)$. So there is a valuation $w$ $x_1$-equivalent to $v$ such that $w$ does not satisfy $(\lnot \phi)$. Such a $w$ satisfies $w$.
+        "$\Leftarrow$" exercise.
+        \end{proof}
+\end{enumerate}
+\end{example}
+
+\begin{example}
+    $(\forall x_1)(\exists x_2) R(x_1,x_2)$ is true in $\skal{\mathbb{Z},<}$ and $\skal{\N,<}$ but not in $\skal{\N,>}$.
+\end{example}
+
+\begin{exercise}
+    Suppose $\phi$ is any $\LL$-formula. Then
+    \begin{itemize}
+        \item $(\exists x_1)(\forall x_2) \phi \rightarrow (\forall x_2)(\exists x_1)\phi) $ is logically valid.
+        \item $((\forall x_2)(\exists x_1) \phi \rightarrow (\exists x_1)(\forall x_2)\phi)$ is not necessarily logically valid.
+    \end{itemize}
+    the first can be shown with valuation arguments. The second can be shown by giving an example.
+\end{exercise}
+
+\begin{example}[Some logically valid formulas]
+Consider the propositional formula 
+    \[ \chi \quad (p_1 \rightarrow (p_2 \rightarrow p_1)) \]
+    Suppose $\LL$ is a first order language and $\phi_1, \phi_2$ are $\LL$-formulas. Substitute $\phi_1$ in place of $p_1$ and $\phi_2$ in placce of $p_2$ in $\chi$. We obtain an $\LL$-formula 
+    \[ \theta \quad (\phi_1 \rightarrow (\phi_2 \rightarrow \phi_1)) \]
+    One can check that $\theta$ is logically valid.
+    
+\end{example}
+
+\begin{definition}
+ Suppose $\chi$ is an $\LL$-formula involving propositional variables $p_1,\dots ,p_n$. Suppose $\LL$ is a first order language and $\phi_1,\dots,\phi_n$ are $\LL$-formulas. A \emph{substitution instance} of $\chi$ is obtained by replacing each $p_i$ by $\phi_i$. Call the result $\theta$.   
+\end{definition}
+
+\begin{theorem}
+.....
+\end{theorem}
+
 
 \end{document}
