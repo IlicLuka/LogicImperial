@@ -745,8 +745,8 @@ There is a correspondence between the relation, function and constant symbols an
 \begin{definition}
 With the same notation as above, suppose $\mathcal{A}$ is an $\LL$-structure. A \emph{valuation in $$\mathcal{A}$$} is a function $v$ from the set of terms on $\LL$ to A satisfying:
 \begin{itemize}
-    \item[a] $v(c_k) = \overline{c}$
-    \item[b] if $t_1,\dots, t_m$ are terms of $\LL$ and $f$ is an $m$-ary function symbol, then $v(f(t_1,\dots,t_m)) = \overline{f}(v(t_1),\dots,v(t_m))$ where $\overline{f}$ is the interpretation of $f$ in $\mathcal{A}$.
+    \item[a)] $v(c_k) = \overline{c}$
+    \item[b)] if $t_1,\dots, t_m$ are terms of $\LL$ and $f$ is an $m$-ary function symbol, then $v(f(t_1,\dots,t_m)) = \overline{f}(v(t_1),\dots,v(t_m))$ where $\overline{f}$ is the interpretation of $f$ in $\mathcal{A}$.
 \end{itemize}
 \end{definition}
 
@@ -787,7 +787,7 @@ Let $\mathcal{G}$ be a group and $g,h \in \mathcal{G}$. Let $v$ be a valuation w
     \begin{itemize}
         \item $v$ satisfies $(\lnot \phi) $ iff $v$ does not satisfy $\phi$ in $\mathcal{A}$.
         \item $v$ satisfies $(\phi \rightarrow \psi)$ in $\mathcal{A}$ iff it is not the case that $v$ satisfies $\phi$ and $v$ does not satisfy $\psi$.
-        \item $v$ satisfies $\dots$
+        \item $v$ satisfies $(\forall x_l ) \phi $ iff every valuation $w$, that is $x_l$-equivalent to $v$ satisfies $\phi$.
     \end{itemize}
 \end{enumerate}
 \end{definition}
@@ -837,7 +837,7 @@ If $\A \vDash \phi$ for every $\LL$-structure $\A$, we say that $\phi$ is \emph{
 \begin{example}[Some logically valid formulas]
 Consider the propositional formula 
     \[ \chi \quad (p_1 \rightarrow (p_2 \rightarrow p_1)) \]
-    Suppose $\LL$ is a first order language and $\phi_1, \phi_2$ are $\LL$-formulas. Substitute $\phi_1$ in place of $p_1$ and $\phi_2$ in placce of $p_2$ in $\chi$. We obtain an $\LL$-formula 
+    Suppose $\LL$ is a first order language and $\phi_1, \phi_2$ are $\LL$-formulas. Substitute $\phi_1$ in place of $p_1$ and $\phi_2$ in place of $p_2$ in $\chi$. We obtain an $\LL$-formula 
     \[ \theta \quad (\phi_1 \rightarrow (\phi_2 \rightarrow \phi_1)) \]
     One can check that $\theta$ is logically valid.
     
@@ -848,8 +848,92 @@ Consider the propositional formula
 \end{definition}
 
 \begin{theorem}
-.....
+\begin{enumerate}
+    \item $\theta$ is an $\LL$-formula.
+    \item If $\chi$ is a tautology, then $\theta$ is logically valid.
+\end{enumerate}
 \end{theorem}
+
+\begin{proof}
+\begin{enumerate}
+    \item is clear by the definition of a formula.
+    \item Take an $\LL$-structure $\A$ and a valuation $v$ in $\A$. Use this to define a propositional valuation $w$ with
+        \[ w(p_i) = v[\phi_i] \quad i \leq n. \]
+    Then prove by induction on the number of connectives in $\chi$ that the value
+        \[ w(\chi) = v[\theta] \]
+    In particular if $\chi$ is a tautology then $v[\theta] = T$. (E.g. in the inductive step you consider the case where $\chi$ is $(\alpha \rightarrow \beta)$. SO $\theta$ is $(\theta_1 \rightarrow \theta_2)$ where $\theta_1$ is obtained from $\alpha$ etc.
+    By the induction hypothesis
+        \[ w(\alpha) = v[\theta_1] \text{ and } w(\beta) = v[\theta_2] \]
+    Thus $ w(\alpha \rightarrow \beta) = v[\theta_1 \rightarrow \theta_2].$ The other connectives and details are left as exercise.
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+Not all logically formulas arise in this way.
+E.g. $(\exists x_1)(\forall x_2) \phi \rightarrow (\forall x_2)(\exists x_1)\phi) $
+\end{remark}
+\subsection{Bound and free variables in formulas}
+
+\begin{example}
+\[ (R_1(x_1,x_2) \rightarrow (\forall x_3)R_2(x_1,x_3)) \]
+\end{example}
+
+\begin{definition}
+ Suppose $\phi,\psi$ are $\LL$- formulas and $(\forall x_i)\phi$ occurs as a subformula of $\psi$, i.e. $\psi$ is $\dots  (\forall x_i)\phi \dots$.
+ We say that $\phi$ is the \emph{scope} of the quantifier $(\forall x_i)$ in $\psi$. An occurrence of a variable $x_j$ in $\psi$ is \emph{bound} if it is in the scope of a quantifier $(\forall x_j)$ in $\psi$ (or if it is simply written after a quantifier).
+ Otherwise it is a \emph{free} occurrence (of $x_j$). Variables having a free occurrence in $\psi$ are called the \emph{free variables} of $\psi$.
+ A formula with no free variables is called a \emph{closed formula} or a \emph{sentence} (of $\LL$).
+\end{definition}
+
+\begin{example}
+\begin{enumerate}
+    \item $\psi_2: \quad ((\forall x_1)R_1(x_1,x_2) \rightarrow R_2(x_1,x_2))$
+    $x_1$ is free since $R_1(x_1,x_2)$ is the scope for $(\forall x_1)$ but it is occurring freely in $R_2(x_1,x_2))$.
+    Compare with 
+    $ \quad ((\forall x_1)(R_1(x_1,x_2) \rightarrow R_2(x_1,x_2)))$. Now $x_1$ is bound.
+    
+    \item $\psi_3: \quad ((\exists x_1)R_1(x_1,x_2) \rightarrow (\forall(x_2)R_2(x_2,x_3))$.
+    Here, $x_1$ is bound but $x_2,x_3$ are free.
+\end{enumerate}
+\end{example}
+
+\begin{remark}[notation]
+If $\psi$ is an $\LL$-formula with free variables amongst $x_1,\dots,x_n$, we might write $\psi(x_1,\dots,x_n)$.
+If $t_1,\dots,t_n$ are terms, by $\psi(t_1,\dots,t_n)$ we mean the $\LL$-formula obtained by replacing each \emph{free} occurrence of $x_i$ by $t_i$.
+
+E.g.
+\[ \psi(x_1,x_2): \quad ((\forall x_1)R_1(x_1,x_2) \rightarrow (\forall x_3) R_2(x_1,x_2,x_3)) \]
+\[t_1: \quad f_1(x_1) \text{ and } t_2: \quad f_2(x_1,x_2) \]
+So 
+\[ \psi(t_1,t_2): \quad ((\forall x_1)R_1(x_1,t_2) \rightarrow (\forall x_3) R_2(t_1,t_2,x_3)) \]
+\end{remark}
+
+\begin{theorem}
+Suppose $\phi$ is a closed $\LL$-formula and $\A$ is an $\LL$-structure, then either $$\A \vDash \phi \text{ or } \A \vDash (\lnot \phi).$$
+More generally, if $\phi$ has free variables amongst $x_1, \dots, x_n$ and $v,w$ are valuations in $\A$ with $v(x_i) = w(x_i)$ for $i = 1, \dots,n$, then
+    \[ v[\phi] = T \Leftrightarrow w[\phi]=T. \]
+    (Allow $n=0$ for the case with no free variables.)
+\end{theorem}
+\begin{proof}
+Note that the first statement follows from the generalization.
+If $\phi$ has no free variables, then, for any valuations $v,w$ in $\A$, they agree on the free variables of $\phi$.
+
+Proving the generalization by induction on the number of connectives and quantifiers in $\phi$.
+\begin{itemize}
+    \item[Base case:] $\phi$ is atomic $R(t_1,\dots,t_m)$ for terms $t_j$. The $t_j$ only involve variables amongst $x_1,\dots,x_n$. As $v,w$ agree on these variables, they agree on $t_j$, i.e. $v(t_j) = w(t_j)$.
+    So $v[R(t_1,\dots,t_m)] = T$ iff
+    \[ \overline{R}(v(t_1),\dots,v(t_m)) \] which is equivalent to 
+    \[ w[R(t_1,\dots,t_m)] = T. \]
+    \item[induction step:] $\phi$ is $(\lnot \psi), (\chi \rightarrow \psi)$ or $(\forall x_i) \psi$.
+    The first two cases are left as exercise.
+    Suppose $\phi$ is $(\forall x_i) \psi$. Suppose $v[\phi] = F$.
+    Then there is a valuation $v`$ that is $x_l$-equivalent to $v$ with $v`[\phi] = F$.
+    The free variables on $\psi$ are amongst $x_1,\dots,x_n,x_i$. Let $w`$ be the valuation $x_i$-equivalent to $w$ with $w`(x_i) = v`(x_i)$.
+    Then $v`,w`$ agree on the free variables on $\psi$. By the induction hypothesis
+        \[ v`[\psi] = w`[\psi] \text{ so } w`[\psi] = F. \]
+    As $w`$ is $x_i$-equivalent to $w$ we obtain $w[(\forall x_i)\psi] = F$.
+\end{itemize}
+\end{proof}
 
 
 \end{document}
