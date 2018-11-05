@@ -90,7 +90,7 @@ Convention: In this course we write $T$ for true and $F$ for false.
 \begin{definition}\label{Def:formula}
 	A \emph{propositional formula} is a string of symbols obtained in the following way:
 \begin{enumerate}
-\item Any variable is a formula. \\
+\item Any variable is a formula.
 \item If $\phi $ and $\psi$ are formulas then so are
 $(\phi \land \psi),(\phi \lor \psi), (\lnot \phi), (\phi \rightarrow \psi), (\phi \leftrightarrow \psi)$.
 \item Any formula is obtained in this way.
@@ -214,8 +214,8 @@ Define
 \end{cases}\]
 So $q_{ij}$ has value $T$ iff $p_j$ has value $v_{ij}$.
 Let $\psi_i$ be
-	\[ (q_{i1}, \dots, q_{in})\]
-Then $F_{\psi_i}(v) = T$ iff each $q_{ij}$ has value $T$ iff $v = v_i$.
+	\[ (q_{i1}, \dots, q_{in}), \]
+then $F_{\psi_i}(v) = T$ iff each $q_{ij}$ has value $T$ iff $v = v_i$.
 
 Let $\theta$ be $(\phi_1 \lor, \dots , \lor \phi_r)$.
 Then $F_{\theta}(v) = T$ iff $F_{\psi_i}(v) = T$ for some $i$ which is equivalent to $v = v_i$ for some $i \leq r$.
@@ -334,7 +334,7 @@ The formal system $L$ for propositional logic consists of:
     \item \textbf{Axioms}: Suppose $\phi,\psi,\chi$ are $L$-formulas. The following are axioms of $L$:
     \begin{itemize}
         \item[A1] $(\phi \rightarrow (\psi \rightarrow \phi))$
-        \item[A2] $((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\psi \rightarrow \chi)))$
+        \item[A2] $((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \chi)))$
         \item[A3]: $(((\lnot \psi) \rightarrow ( \lnot \phi)) \rightarrow (\phi \rightarrow \psi))$
     \end{itemize}
     \item \textbf{deduction rule}: \emph{ Modus Ponens (MP)} from $\phi,  (\phi \rightarrow \psi)$ deduce $\psi$.
@@ -371,8 +371,8 @@ Say $\Gamma$ is a \emph{consequence} of $\Gamma$.
 Being a consequence of the empty set ($\Gamma = \emptyset$) is the same as being a theorem of $L$. ($\emptyset \vdash_L \phi \Leftrightarrow \vdash_L \phi$)
 \end{remark}
 
-\begin{theorem}[Deduction Theorem.]\label{Th:deduction}
-Suppose $\Gamma$ is a set of $L$-formulas and $phi,\psi$ are $L$-formulas. Suppose
+\begin{theorem}[Deduction Theorem.]\label{Th:deductionL}
+Suppose $\Gamma$ is a set of $L$-formulas and $\phi,\psi$ are $L$-formulas. Suppose
     \[ \Gamma \cup \{\phi\} \vdash \psi \] then
     \[ \Gamma \vdash_L (\phi \rightarrow \psi) \].
 \end{theorem}
@@ -382,16 +382,16 @@ Suppose $\phi,\psi,\chi$ are $L$-formulas such that $ \vdash_L (\phi \rightarrow
 \end{corollary}
 
 \begin{proof}
-Use \ref{Th:deduction} with $\Gamma = \emptyset$: Show $\{\phi\} \vdash_L \chi$. Here is a deduction of $chi$ from $phi$:
+Use \ref{Th:deductionL} with $\Gamma = \emptyset$: Show $\{\phi\} \vdash_L \chi$. Here is a deduction of $chi$ from $phi$:
 \begin{enumerate}
-    \item $(phi \rightarrow \psi)$ (theorem of $L$)
+    \item $(\phi \rightarrow \psi)$ (theorem of $L$)
     \item $(\psi \rightarrow \chi)$ (theorem of $L$)
     \item $\phi$ (assumption)
     \item $\psi$ (MP)
     \item $\chi$ (MP).
 \end{enumerate}
-Thus $\{phi\} \vdash_L \chi$.
-By \ref{Th:deduction}: $\emptyset \vdash_L (\phi \rightarrow \chi)$ i.e. $ \vdash_L (\phi \rightarrow \chi) $.
+Thus $\{\phi\} \vdash_L \chi$.
+By \ref{Th:deductionL}: $\emptyset \vdash_L (\phi \rightarrow \chi)$ i.e. $ \vdash_L (\phi \rightarrow \chi) $.
 \end{proof}
 
 \begin{lemma}
@@ -409,18 +409,18 @@ Suppose $\phi,\psi$ are $L$-formulas. Then
     \item by 1. and MP (twice)
     \item Suppose $\chi$ is any formula. Then $\{(\lnot \phi),((\lnot \phi) \rightarrow \phi) \} \vdash_L \chi$\label{frm:1} (by MP and 2.) 
     Let $\alpha$ be any axiom and let $\chi$ be $(\lnot \alpha)$.
-    Apply \ref{Th:deduction} to \ref{frm:1} to get:
+    Apply \ref{Th:deductionL} to \ref{frm:1} to get:
     \[ \{((\lnot \phi) \rightarrow \phi)\} \vdash_L ((\lnot \phi) \rightarrow (\lnot \alpha)) \]
     A3: $(((\lnot \psi) \rightarrow ( \lnot \phi)) \rightarrow (\phi \rightarrow \psi))$ and MP generate:
     \[ \{((\lnot \phi) \rightarrow \phi)\} \vdash_L ( \alpha \rightarrow \phi) \quad. \]
     Since $\alpha$ is an axiom, by MP
-        \[ \{((\lnot \phi) \rightarrow \phi)\} \vdash_L \phi \] and the application of \ref{Th:deduction} gives us:
+        \[ \{((\lnot \phi) \rightarrow \phi)\} \vdash_L \phi \] and the application of \ref{Th:deductionL} gives us:
         \[ \vdash_L (((\lnot \phi) \rightarrow \phi) \rightarrow \phi) \quad. \]
 \end{enumerate}
 
 \end{proof}
 
-\begin{proof}[Proof of \ref{Th:deduction}:]
+\begin{proof}[Proof of \ref{Th:deductionL}:]
 Suppose $\Gamma \cup \{\phi\} \vdash_L \psi$ using a deduction of length n. Show by induction on $n$ that $\Gamma \vdash_L (\phi \rightarrow \psi).$
 \begin{itemize}
     \item[Base step:] $n = 1$. In this case $\phi$ is either an axiom or in $\Gamma$ or is $phi$. In the first two cases $\Gamma \vdash_L \phi$ (one line deduction!) Using the A1 axiom $(\psi \rightarrow (\phi \rightarrow \psi))$ and MP we obtain $\Gamma \vdash_L (\phi \rightarrow \psi)$.
@@ -432,14 +432,14 @@ Suppose $\Gamma \cup \{\phi\} \vdash_L \psi$ using a deduction of length n. Show
      Otherwise we use the inductive hypothesis to get $$\Gamma \vdash_L (\phi \rightarrow \chi)$$ and 
         \[ \Gamma \vdash_L (\phi \rightarrow (\chi \rightarrow \psi)). \]
     We have the A2 axiom 
-        \[ ((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\psi \rightarrow \chi))) \]
+        \[ ((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \chi))) \]
     Using the two formulas we obtained, this axiom and MP twice we obtain $\Gamma \vdash_L (\phi \rightarrow \psi)$ as required, completing the induction step.
 \end{itemize}
 \end{proof}
 
 \subsection{soundness and completeness of L}
 
-\begin{theorem}[soundness of L] \label{Th:soundness}
+\begin{theorem}[soundness of L] \label{Th:soundnessL}
 Suppose $\phi$ is a theorem of $L$. Then $\phi$ is a tautology.
 \end{theorem}
 \begin{remark}[notation]
@@ -448,14 +448,14 @@ Suppose $\phi$ is a theorem of $L$. Then $\phi$ is a tautology.
  Note that, using the truth table rules, this assigns a truth value $v(\phi) \in \{ T, F \}$ to every $L$-formula $\phi$.
 \end{remark}
 
-\begin{proof}[Proof of \ref{Th:soundness}:] By the induction on the length of a proof of $\phi$ it is enough to show:
+\begin{proof}[Proof of \ref{Th:soundnessL}:] By the induction on the length of a proof of $\phi$ it is enough to show:
 \begin{enumerate}
     \item every axiom is a tautology;
     \item MP preserves tautologies. I.e. if $\psi,(\psi \rightarrow \chi)$ are tautologies, then so is $\chi$.
 \end{enumerate}
 For 1. use truth tables or argue as follows:
 \begin{itemize}
-    \item [A2] Suppose for 1. if there is a valuation $v$ with \[ v(((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\psi \rightarrow \chi)))) = F \]
+    \item [A2] Suppose for 1. if there is a valuation $v$ with \[ v(((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \chi)))) = F \]
     Then \[ v((\phi \rightarrow (\psi \rightarrow \chi))) = T \] and 
         \[ v(((\phi \rightarrow \psi) \rightarrow (\psi \rightarrow \chi))) = F \]
     
@@ -502,11 +502,11 @@ Suppose $\Gamma$ is a consistent set of $L$-formulas and $\Gamma \not \vdash_L \
 Suppose not. So there is some formula $\psi$ with
 \[ \Gamma \cup \{(\lnot \phi) \} \vdash_L \psi \] and
 \[ \Gamma \cup \{(\lnot \phi) \} \vdash_L (\lnot \psi) \]
-Apply \ref{Th:deduction} to the second line above, then
+Apply \ref{Th:deductionL} to the second line above, then
 \[ \Gamma \vdash_L ((\lnot \phi) \rightarrow (\lnot \psi)). \]
 By A3 and MP we obtain
 \[ \Gamma \vdash_L (\psi \rightarrow \psi). \]
-Then $\Gamma \cup \{(\lnot \phi) \} \vdash_L \phi$. By \ref{Th:deduction}: 
+Then $\Gamma \cup \{(\lnot \phi) \} \vdash_L \phi$. By \ref{Th:deductionL}: 
 \[ \Gamma \vdash_L ((\lnot \phi) \rightarrow (\lnot \phi)  \]
 and by a result from above
     \[ \vdash_L (((\lnot \phi) \rightarrow \phi) \rightarrow \phi) \]
@@ -621,7 +621,7 @@ Plan :
 \subsection{Structures}
 
 \begin{definition}
-    Suppose $A$ is a set and $n in \N$, An \emph{$n$-ary relation} of $A$ is a subset $\overline{R} \subseteq A^n$.
+    Suppose $A$ is a set and $n \in \N$, An \emph{$n$-ary relation} of $A$ is a subset $\overline{R} \subseteq A^n$.
     An \emph{$n$-ary function} on $A$ is a function $\overline{f}: A^n \rightarrow A$.
 \end{definition}
 
@@ -637,7 +637,7 @@ Plan :
 \begin{definition}
     A \emph{first-order structure} $\mathcal{A}$ consists of:
     \begin{enumerate}
-        \item A nonempty set A (the \emph{domain} of $\mathcal{A}$
+        \item A nonempty set A -- the \emph{domain} of $\mathcal{A}$
         \item A set $\{\overline{R}_i:i \in I \}$ of \emph{relations} on $A$.
         \item A set $\{\overline{f}_j:j \in J \}$ of \emph{functions} on $A$.
         \item A set $\{\overline{c}_k:k \in K \}$ of \emph{constants} in $A$. ($c_k \in A$)
@@ -934,6 +934,232 @@ Proving the generalization by induction on the number of connectives and quantif
     As $w`$ is $x_i$-equivalent to $w$ we obtain $w[(\forall x_i)\psi] = F$.
 \end{itemize}
 \end{proof}
+
+\begin{definition}
+ Let $\phi$ be an $\LL$-formula, $x_i$ a variable, $t$ an $\LL$-term, then we say \emph{$t$ is free for $x_i$ in $\phi$}, if there is no variable $x_j$ in $t$ such that $x_i$ has a free occurrence within the scope of a quantifier $(\forall x_j)$ in $\phi$. 
+\end{definition}
+
+\begin{theorem}
+Suppose $\phi(x_1)$ is an $\LL$-formula (possibly with other free variables). Let $t$ be a term free for $x_1$ in $\phi$. Then 
+    \[ \vDash ((\forall x_1)\phi(x_1) \rightarrow \phi(t)). \]
+In particular, if $\A$ is an $\LL$-structure with $\A \vDash (\forall x_1)\phi(x_1)$ then $\A \vDash \phi(t)$.
+\end{theorem}
+
+\begin{lemma}
+With this notation, suppose $v$ is a valuation in $\A$. Let $w$ be a valuation in $\A$ with is $x_1$ equivalent to $v$, with $w(x_1) = v(t)$. Then 
+    \[ w[\phi(x_1)] = T \Leftrightarrow v[\phi(t)] = T \]
+\end{lemma}
+
+\begin{proof}
+The proof is posted on blackboard (omitted here) and works via induction on the connectives and quantifiers.
+\end{proof}
+
+\begin{proof}[Proof of theorem]
+Suppose $v$ is a valuation with $v[\phi(t)] = F$.
+Claim: $v[(\forall x_1) \phi(x_1)] = F$.
+To show this claim, take $w$ to be a $x_1$-equivalent valuation to $v$. such that $w(x_1) = v(t)$.
+Then by the lemma above 
+    \[ w[\phi(x_1)] = F \text{ implies } v[(\forall x_1) \phi(x_1)] = F \]
+Thus the implication is shown.
+\end{proof}
+
+\subsection{ The formal system $K_{\LL}$ }
+
+\begin{definition}
+ Suppose $\LL$ is a first order language. The \emph{formal system $K_\LL$} has as
+ \begin{enumerate}
+     \item \textbf{formulas}: the $\LL$-formulas
+     \item \textbf{axioms}: For $\phi,\psi,\chi$ $\LL$-formulas we have \begin{itemize}
+          \item[A1] $(\phi \rightarrow (\psi \rightarrow \phi))$
+        \item[A2] $((\phi \rightarrow (\psi \rightarrow \chi)) \rightarrow ((\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \chi)))$
+        \item[A3]: $(((\lnot \psi) \rightarrow ( \lnot \phi)) \rightarrow (\phi \rightarrow \psi))$
+        \item[K1]: $(\forall x_i) \phi(x_i) \rightarrow \phi(t)$, where $t$ is a term free for $x_i$ in $\phi$.
+        \item[K2]: $((\forall x_i)(\phi \rightarrow \psi) \rightarrow (\phi \rightarrow \forall x_i \psi))$ if $x_i$ is not free in $\phi$. 
+     \end{itemize}
+     
+     \item \textbf{deduction rules}
+        \begin{enumerate}
+            \item \emph{ Modus Ponens (MP)}: from $\phi,  (\phi \rightarrow \psi)$ deduce $\psi$.
+            \item Gen(generalization): From $\phi$ deduce $(\forall x_i)\phi)$.
+        \end{enumerate}
+     
+ \end{enumerate}
+ 
+ A \emph{proof} in $K_\LL$ arises in the same way as a proof in $L$.
+ A \emph{theorem} of $K_\LL$ is the last formula in some proof.
+ Write $\vdash_\LL \phi$ for "$\phi$ is a theorem in $k_\LL$".
+ 
+\end{definition}
+
+\begin{remark}
+Sometimes we omit the $K_\LL$ and write $\vdash \phi$.
+\end{remark}
+
+\begin{definition}
+ Suppose $\Sigma$ is a set of $\LL$-formulas and $\psi$ an $\LL$-formula. A \emph{deduction from $\Sigma$} is a finite sequence of formulas, ending with $\psi$, each of which is one of:
+ \begin{enumerate}
+     \item an axiom
+     \item a formula in $\Sigma$
+     \item obtained fro earlier formulas in the deduction using the deduction rules, with the only restriction, that when gen is applied it does not include a variable occurring freely in $\Sigma$.
+     Write $\Sigma \vdash \phi$ if there is a deduction of $\phi$ fro $\Sigma$.
+ \end{enumerate}
+\end{definition}
+
+\begin{remark}
+\begin{enumerate}
+    If $\Sigma$ consists of closed formulas we do not need to worry about the restriction on Generalization. 
+\end{enumerate}
+\end{remark}
+
+\begin{theorem}
+Suppose $\phi$ is an $\LL$-formula which is a substitution instance of a tautology in propositional logic. Then $\vdash_{K_\LL} \phi$.
+\end{theorem}
+
+\begin{example}
+$\vdash_{K_\LL} (\lnot \lnot\phi \rightarrow \phi)$ is such a case, etc.
+\end{example}
+
+\begin{proof}
+There is a tautology $\chi$ with propositional variables $p_1, \dots, p_n$ and $\LL$-formulas $\psi_1, \dots, \psi_n$ such that $\phi$ is obtained from $\chi$ by substituting $\psi_i$ for $p_i$ ($i \leq n$).
+By completeness of propositional logic (\ref{Th:completenessL}) there is a proof in $L$ of $\chi$:
+$\chi_1,\dots,\chi_r$ (each one a propositional formula and $\chi_r = \chi$.
+If we substitute $\psi_1,\psi_n$ for $p_1,\dots, p_n$ in all $\chi_j$ we obtain a sequence of $\LL$-formulas $\phi_1,\dots,\phi_r$ which is a proof of $\phi = \phi_r$.
+\end{proof}
+
+\begin{theorem}[Soundness]\label{Th:soundness}
+If $\vdash_{K_\LL} \phi$ then $\vDash \phi$ (i.e. it is logically valid).
+\end{theorem}
+
+\begin{proof}
+Like in the proof for L (\ref{Th:soundnessL}) we need to show
+\begin{enumerate}
+    \item Axioms are logically valid
+    \item Deduction rules preserve logical validity
+\end{enumerate}
+
+\begin{enumerate}
+    \item The axioms A1, A2, A3 are logically valid since they are substitution instances of the propositional tautologies, which are logically valid themselves.\\
+    K1 is logically valid by an earlier result.\\
+    K2: Suppose we have a valuation $v$ such that 
+        \[ v[(\phi \rightarrow (\forall x_i)\psi)] = F \]
+    implying $v[\phi] = T$ and $v[(\forall x_i)\psi)] = F$.
+    So there is a valuation $v`$ $x_i$ equivalent to $v$ with $v`[\psi] = F$. Since $v$ and $v`$ agree on all variables free in $\phi$ an earlier result tells us 
+    \[ v[\phi] = v`[\phi] = T \]
+    \[ v`[(\phi \rightarrow \psi)] = F. \]
+    Thus $v[(\forall x_i)(\phi \rightarrow \psi)] = F$ and
+    $v[K2] = T$.
+    \item deduction rules are left as exercise.
+\end{enumerate}
+\end{proof}
+\begin{exercise}
+    Suppose $\Sigma \vdash \psi$, then for every valuation $v$ with $v[\sigma] = T$ for all $\sigma \in \Sigma$ we have $v[\psi] = T$.
+\end{exercise}
+
+\begin{corollary}
+ There is no $\LL$-formula $\phi$ with $\vdash_{K_\LL} \phi$ and $\vdash_{K_\LL} (\lnot \phi)$.
+\end{corollary}
+
+\begin{theorem}[Deduction Theorem]\label{Th:deduction}
+Suppose $\LL$ is a first order language. $\Sigma$ a set of $\LL$-formulas and $\phi,\psi$ $\LL$-formulas. Then $\Sigma \cup \{ \phi \} \vdash \psi$ implies $\Sigma \vdash (\phi \rightarrow \psi$.
+\end{theorem}
+
+\begin{proof}
+Follows from proof of the deduction Theorem for $L$ (\ref{Th:deductionL}) by induction on the length of the deduction.
+
+\begin{enumerate}
+    \item[Base case:] One line deduction Argue exactly as in (\ref{Th:deductionL})
+    \item[inductive step:] Suppose $\psi$ follows from earlier formulas in the deduction by MP or Gen.
+        \begin{itemize}
+            \item[MP] Exactly as in (\ref{Th:deductionL})
+            \item[Gen] Suppose $\psi$ is obtained using Gen, then $\psi = (\forall x_i) \theta$ and $\Sigma \cup \{ \phi \} \vdash \theta$ and $x_i$ is not free in any formula in $\Sigma \cup \{ \phi \}$.
+            By induction we have:
+            \[ \Sigma \vdash (\phi \rightarrow \theta) \]
+            and by K2 $\Sigma \vdash (\forall x_i(\phi \rightarrow \theta) \rightarrow (\phi \rightarrow \forall x_i \theta)).$
+            By Gen $\Sigma \vdash \forall x_i (\phi \rightarrow \theta)$ and $x_i$ is not free  in any formula in $\Sigma$.
+            So by MP we get $\Sigma \vdash (\phi \rightarrow (\forall x_i) \theta)$. 
+        \end{itemize}
+\end{enumerate}
+\end{proof}
+
+\subsection{Goedel completeness Theorem}
+
+\begin{definition}
+ A set $\Sigma$ of $\LL$-formulas is \emph{consistent} if there is no $\LL$-formula $\phi$ with
+    \[ \Sigma \vdash_{K_\LL} \phi \text{ and }  \Sigma \vdash_{K_\LL} (\lnot \phi). \]
+    
+    By Soundness (or \ref{Th:soundness}) $\emptyset$ is consistent.
+\end{definition}
+
+\begin{remark}
+If $\Sigma$ is inconsistent then $\Sigma \vdash \chi$ for any $\LL$-formula $\chi$.
+\end{remark}
+
+We want to show, that if $\Sigma$ is a consistent set of closed $\LL$-formulas then there is an $\LL$-structure $\A$ with $\A \vDash \sigma$ for all $\sigma \in \Sigma$. From there the completeness Theorem will follow.
+
+\begin{remark}
+Simplification: We are going to assume, that $\LL$ is countable. I.e. The variables, constants, relations and functions are all just countably many. So we can enumerate all the $\LL$-formulas by the natural numbers. In particular, we can enumerate the closed $\LL$-formulas as
+    \[ \psi_0, \psi_1, \psi_2, \dots \quad. \]
+\end{remark}
+
+\begin{proposition}
+Suppose $\Sigma$ is a (consistent) set of closed $\LL$-formulas and $\phi$ is a closed $\LL$-formula
+\begin{enumerate}
+    \item If $\Sigma \not \vdash \phi$ then $\Sigma \cup \{\lnot \phi \}$ is consistent. 
+    \item There is a consistent set $\Sigma^* \supseteq \Sigma$ of closed $\LL$-formulas such that, for every closed $\LL$-formula $\psi$ either
+        \[ \Sigma^* \vdash \psi \text{ or } \Sigma^* \vdash (\lnot \psi) \]
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Similar to the proofs before the completeness Theorem in $L$ (\ref{Th:completenessL}.
+\end{proof}
+
+\begin{theorem}\label{Th:structure_compl}
+Suppose that $\Sigma$ is a consistent set of closed $\LL$-formulas. Then there is a countable $\LL$-structure $\A$ with $\A \vDash \Sigma$ (meaning that $\A \vDash \sigma$ for every $\sigma \in \Sigma$.
+\end{theorem}
+
+\begin{proof}
+Hard part, will come later.
+\end{proof}
+
+\begin{theorem}\label{Th:inverseSoundness}
+Let $\Sigma$ be a set of closed $\LL$-formulas and $\phi$ a closed $\LL$-formula. If every model of $\Sigma$ is a model of $\phi$, then $\Sigma \vdash \phi$. [Where \emph{being a model of $\Sigma$ implies being a model of $\phi$} means that if $\A \vDash \sigma$ for all $\sigma \in \Sigma$ then $\A \vDash \phi$.]
+\end{theorem}
+
+\begin{remark}
+This is the opposite direction to Soundness (\ref{Th:soundness}).
+\end{remark}
+
+\begin{proof}
+We may assume, that $\Sigma$ is consistent, since otherwise everything is a consequence. of $\Sigma$.
+By assumption there is no model of $\Sigma \cup \{(\lnot \phi) \}$. So by \ref{Th:structure_compl}, $\Sigma \cup \{ (\lnot \phi) \}$ is inconsistent. So by the first part of the above proposition, $\Sigma \vdash \phi$.
+\end{proof}
+
+\begin{theorem}[Godel Completeness Theorem for $K_{\LL}$]
+If $\phi$ is an $\LL$-formula with $\vDash \phi$, then $\phi$ is a theorem of $K_{\LL}$, i.e. $\vdash_{K_\LL}$.
+\end{theorem}
+
+\begin{proof}
+If $\phi$ is closed, this follows from (\ref{Th:inverseSoundness} with $\Sigma = \emptyset$.
+Suppose $\phi$ has free variables amongst $x_1,\dots,x_n$ and consider the closed formula $\psi$ 
+    \[ (\forall x_1)\dots(\forall x_n) \phi. \]
+As $\vDash \phi$ we obtain $\vDash \psi$.
+So, by the closed case it follows that $\vdash \psi$. i.e. 
+    \[ \vdash (\forall x_1)\dots(\forall x_n) \phi.\]
+If $\theta$ is any formula then $\vdash ((\forall x_i)\theta \rightarrow \theta)$.
+So with Modus Ponens (applied n times) we obtain $\vdash_{K_\LL} \phi$.
+\end{proof}
+
+\begin{corollary}[Compactness Theorem]\label{Th:Compactness}
+Suppose $\Sigma$ is a set of closed $\LL$-formulas and every finite subset of $\Sigma$ has a model. Then $\Sigma$ has a model.
+\end{corollary}
+
+\begin{proof}
+Suppose $\Sigma$ has no model, then by \ref{Th:structure_compl} $\Sigma$ is inconsistent, thus there is a formula $\phi$ with $\Sigma \vdash \phi$ and $\Sigma \vdash (\lnot \phi)$.
+Deductions only involve finitely many formulas in $\Sigma$. So there is a finite subset $\Sigma_0 \subseteq \Sigma$ with $\Sigma_0 \vdash \phi$ and $\Sigma_0 \vdash (\lnot \phi)$. But then $\Sigma_0$ is a finite subset of $\Sigma$ having no model -- contradiction.
+\end{proof}
+
+
 
 
 \end{document}
