@@ -24,6 +24,7 @@
 \newcommand{\LL}{\mathcal L}
 \newcommand{\J}{\mathcal J}
 \newcommand{\A}{\mathcal A}
+\newcommand{\C}{\mathcal C}
 
 \newcommand{\pmat}[1]{\begin{pmatrix}
 		#1
@@ -1159,7 +1160,241 @@ Suppose $\Sigma$ has no model, then by \ref{Th:structure_compl} $\Sigma$ is inco
 Deductions only involve finitely many formulas in $\Sigma$. So there is a finite subset $\Sigma_0 \subseteq \Sigma$ with $\Sigma_0 \vdash \phi$ and $\Sigma_0 \vdash (\lnot \phi)$. But then $\Sigma_0$ is a finite subset of $\Sigma$ having no model -- contradiction.
 \end{proof}
 
+\begin{proof}[Sketch for the proof of \ref{Th:structure_compl}]
+Series of steps; notation is cumulative. They can be found in greater detail on Blackboard.
 
+\begin{enumerate}
+    \item[Step 1.] Let $b_0,\dots,b_l$ be new constant symbols. Form $\LL^+$ by adding these to the symbols of $\LL$. Regard $\Sigma$ as a set of $\LL^+$-formulas. Check $\Sigma$ is still consistent (in the formal system of $\LL^+$).
+    \textbf{Note:} $\LL^+$ is still a countable language.
+    \item[Step 2.] (Adding witnesses)
+    \begin{lemma}
+    There is a consistent set of closed $\LL^+$-formulas $\Sigma_\infty \supseteq \Sigma$ such that for every formula $\theta(x_i)$ with one free variable there is some $b_j$ with 
+        \[ \Sigma_\infty \vdash (\lnot(\forall x_i) \theta(x_i) \rightarrow \lnot \theta(b_j)) \]
+    [Think of $\theta(x_i)$ as $\lnot \chi(x_i)$. Then this formula is essentially: $(\exists x_i) \chi(x_i) \rightarrow \chi(b_j)$ - so $b_j$ witnesses the idea that there exists some $x_i$ that satisfies $\chi$.]
+    \end{lemma}
+    \item[Step 3.] Use the Lindenbaum Lemma - there is a consistent set $\Sigma^* \supseteq \Sigma$ of closed $\LL^+$-formulas such that for every closed $\phi$ either $\Sigma^* \vdash \phi$ or $\Sigma^* \vdash \lnot \phi$.
+    \item[step 4.] (Building a strucure)
+    Let $A:= \{ \overline{t} : t \text{ is a closed term of } \LL^+ \}$
+    \textbf{Note}: A term is closed if it only involves constant symbols and function symbols (no variables). We use the $\overline{\phantom{t}}$ to distinguish when we are thinking of a term as an element of $A$. 
+    As $\LL^+$ is countable, $A$ is countable. Make $A$ into an $\LL^+$-structure.
+    \begin{itemize}
+        \item Each constant symbol $c$ of $\LL^+$ is interpreted as $\overline{c} \in A$.
+        \item Suppose $R$ is an $n$-ary relation symbol. Define the relation $\overline{R} \subseteq A^n $ by
+            \[ (\overline{t_1},\dots,\overline{t_n} \in \overline{R} \Leftrightarrow \Sigma^* \vdash R(t_1,\dots,t_n), \]
+        where $t_1,\dots,t_n$ are closed $\LL^+$-terms.
+        \item Suppose $f$ is an $m$-ary function symbol. Define a function $A^m \rightarrow A$ by 
+            \[ \overline{f}(\overline{t_1},\dots,t_m) = \overline{f(t_1,\dots,t_m)}, \]
+        for closed terms $t_1,\dots,t_m$. Call this structure $\A$.
+    \end{itemize}
+    \textbf{Note}: If $v$ is a valuation in $\A$ and $t$ is a closed term, then $v(t) = \overline{t}$ (by steps 1 and 3 here).
+\end{enumerate}
+\begin{lemma}[Main Lemma]
+For every closed $\LL^+$-formula $\phi$
+    \[ \Sigma^* \vdash \phi \Leftrightarrow A \vDash \phi. \]
+\end{lemma}
+\begin{proof}
+By induction on the number of connectives and quantifiers in $\phi$.
+\begin{itemize}
+    \item[Base case:] $\phi$ is atomic, i.e. $\phi$ is $\R(t_1,\dots,t_n)$ for some closed terms $t_i$ and relation symbol $R$. By definition of the structure the base step holds.
+    \item[Inductive step:] Assume the equivalence holds for closed formulas involving fewer connectives and quantifiers.
+   \begin{itemize}
+       \item  Suppose $\phi$ is $(\lnot \psi)$ then by an earlier result
+        \[ \A \vDash \phi \Leftrightarrow \A \not \vDash \psi \]
+    which happens if and only if
+        \[ \Sigma^* \not \vdash \psi \]
+    by the hypothesis.
+    Thus
+        \[ \Sigma^* \vdash \lnot \psi. \]
+    \item $\phi$ being $(\psi \rightarrow \chi)$ is left as exercise.
+    \item $\phi$ is $(\forall x_i) \psi$
+    If $x_i$ is not free in $\psi$. So $\psi$ is closed and we can use the induction hypothesis.
+    Otherwise, $x_i$ is free in $\psi$. So $\psi(x_i)$ has a single free variable.
+    Now Suppose that $\A \vDash \phi$ and $\Sigma^* \not \vdash \phi$. Then by the definition of $\Sigma^*$, $\Sigma^* \vdash (\lnot \phi)$.
+    By step 2:
+    \[ \Sigma^* \vdash (\lnot(\forall x_i) \psi(x_i) \rightarrow (\lnot \psi(b_j))) \]
+    for some constant symbol $b_j$.
+    I.e. $\Sigma^* \vdash ((\lnot \phi) \rightarrow (\lnot \phi(b_j)))$ So $\Sigma^* \vdash \lnot \psi(b_j)$.
+    But $ \lnot \psi(b_j)$ is closed and we obtain
+        \[ \A \vDash \lnot \psi(b_j). \]
+        This contradicts $\A \vDash (\forall x_i) \psi$.
+        [Take a valuation $v$ in $\A$ with $v(x_i) = b_j$; then $v$ does not satisfy $\psi$, by the above.]
+    Thus the direction "$\Leftarrow$" is shown. The other direction can be found on Blackboard.
+    \end{itemize} 
+\end{itemize}
+\end{proof}
+
+\end{proof}
+
+\subsection{Equality}
+\textbf{MISSING}
+
+\begin{theorem}\label{Th:Loewenheim_Skolem}
+Suppose $\LL^=$ is a countable first order language with equality and $\mathcal{B}$ is a normal $\LL^=$ structure. Then there is a countable normal $\LL^=$-structure $\A$ such that for every closed $\LL^=$-formula $\phi$
+    \[ \mathcal{B} \vDash \phi \Leftrightarrow \A \vDash \phi \]
+\end{theorem}
+
+\begin{example}
+$\mathcal{B} + \langle \R, +, \cdot, 0, 1, \mathrm{exp}() \rangle
+\A = ?
+$
+\end{example}
+
+\begin{proof}
+$\Sigma = \{ \text{closed } \phi : \mathcal{B} \vDash \phi \}$ (called the \emph{theory of $\mathcal{B}$}. Then $\Sigma \supseteq \Sigma_E$ (axioms for equality), and $\Sigma$ is consistent. By \ref{Th:structure_compl} has a countable model $\C$. Then $\hat{\C}$ is a countable normal model of $\Sigma$. (2.6.3. in the above section??)
+So if $\phi$ is closed and $\mathcal{B} \vDash \phi$ then $\hat{\C} \vDash \phi$. Conversely, if $\phi$ is closed and $\mathcal{B} \not \vDash \phi$ then $\mathcal{B} \vDash (\lnot\phi)$. Thus $\hat{\C} \vDash (\lnot \phi)$ so $\hat{\C} \not \vDash \phi$.
+\end{proof}
+
+\begin{example}
+\begin{enumerate}
+    \item linear orders:
+    Let $\LL^=$ be a first order language with equality and a $2$-ary relation symbol $\leq$.
+\end{enumerate}
+\end{example}
+
+\begin{definition}
+     A \emph{linear order} $\A = \langle A; \leq_A \rangle$ is a normal model of:
+        \[ \phi_1: \quad (\forall x_1)(\forall x_2) (((x_1 \leq x_2) \land (x_2 \leq x_1)) \leftrightarrow (x_1 = x_2)) \]
+        \[ \phi_2: \quad (\forall x_1)(\forall x_2)(\forall x_3) (((x_1 \leq x_2) \land (x_2 \leq x_3)) \rightarrow (x_1 \leq x_3)) \]
+        \[ \phi_3: \quad (\forall x_1)(\forall x_2) (((x_1 \leq x_2) \lor (x_2 \leq x_1)) \]
+    It is \emph{dense} if also
+        \[ \phi_1: \quad (\forall x_1)(\forall x_2)(\exists x_3) ((x_1 < x_2) \rightarrow ((x_1 < x_3) \land (x_3 < x_2)))) \]
+    where $x_1 < x_2$ is the obvious abbreviation.
+    It is \emph{without endpoints} if 
+        \[ \phi_5: \quad (\forall x_1)(\exists x_2) (x_1 < x_2) \]
+    and
+        \[ \phi_f: \quad (\forall x_1)(\exists x_2) (x_2 < x_1) \quad . \]
+    Let $\Delta = \{\phi_1, \dots,\phi_6\}$.
+\end{definition}
+
+\begin{theorem}\label{Th:QsimR}
+\begin{enumerate}
+    \item For every closed $\LL^=$-formula $\phi$
+        \[ \mathbb{Q} \vDash \Leftrightarrow \R \vDash \phi \]
+    \item There is an algorithm to decide, given a closed $\LL^=$-formula $\phi$, whether $\mathbb{Q} \vDash \phi$ or $\mathbb{Q} \vDash (\lnot \phi)$.
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}
+     Linear orderings $\A$ and $\mathcal{B}$ are \emph{isomorphic} if there is an order preserving bijection $\alpha: A \rightarrow B$ i.e. for all $a,a` \in A$
+     \[ a \leq_A a` \Leftrightarrow \alpha(a) \leq_B \alpha(a`) \quad . \]
+     
+     If $\A, \mathcal{B}$ are isomorphic and $\phi$ is closed then $\A \vDash \phi \Leftrightarrow \mathcal{B} \vDash \phi$.
+\end{definition}
+
+\begin{theorem}[Cantor]
+If $\A,\mathcal{B}$ are countable dense linear order without endpoints, then $\A,\mathcal{B}$ are isomorphic.
+\end{theorem}
+
+\begin{lemma}[Los-Vaught Test]
+Let $\Sigma = \Sigma_E \cup \Delta$. Then for every closed $\LL^=$-formula $\phi$ we have either
+    \[ \Sigma \vdash \phi \quad \text{or} \quad \Sigma \vdash (\lnot \phi) \]
+[Say $\Sigma$ is complete.]
+\end{lemma}
+
+\begin{proof}
+Suppose not. Then because $\Sigma$ is consistent (we know it has models) we can use \ref{TH:extension} to get 
+\[ \Sigma_1 = \Sigma \cup \{ (\lnot \phi \} \] and
+\[ \Sigma_2 = \Sigma \cup \{ (\lnot \lnot \phi \} \]
+which are consistent.
+By earlier results it follows that $\Sigma_1, \Sigma_2$ have countable normal models $\A_1,\A_2$. So $\A_1,\A_2$ are countable linear orders without endpoints and $\A_1 \vDash (\lnot \phi)$ and $\A_2 \vDash \phi$. This is a contradiction due to Cantor`s Theorem above.
+\end{proof}
+
+\begin{proof}[Proof of \ref{Th:QsimR}]
+Show that $\mathbb{Q} \vDash \phi \Leftrightarrow \Sigma \vdash \phi$.
+"$\Leftarrow$": As $\mathbb{Q} \vDash \Sigma$ we already know this direction.
+"$\Rightarrow$": If $\Sigma \not \vdash \phi$ then by the lemma above $\Sigma \vdash (\lnot \phi)$. Thus $\mathbb{Q} \vDash (\lnot \phi)$, so $\mathbb{Q} \not \vDash \phi $.
+Similarly $\R \vDash \phi \Leftrightarrow \Sigma \vdash \phi$ proving the result. 
+\end{proof}
+
+We want an algorithm deciding - given a closed formula $\theta$ - whether 
+    \[ \langle \mathbb{Q}; \leq \rangle \vDash \theta  \] or 
+    \[ \langle \mathbb{Q}; \leq \rangle \vDash \lnot \theta  \]
+
+\begin{remark, definition}
+     $\Sigma$ is a \emph{recursively enumerable} set of formulas: i.e. we can write an algorithm to systematically generate the formulas in $\Sigma$.
+     Note that the set of axioms for $K_{\LL}$ is recursively enumerable. So the set of deductions from $\Sigma$ is also recursively enumerable. So the set of consequences of $\Sigma$ is recursively enumerable.
+\end{remark, definition}
+
+\textbf{Method:} Run the algorithm from the remark above, that generates all consequences of $\Sigma$. By $\Sigma \vdash \theta \Leftrightarrow \langle \mathbb{Q}; \leq \rangle \vDash \theta $ at the same point, we will see either $\theta$ or $(\lnot \theta)$. At this point the method stops.
+
+\begin{remark}
+This method depends on the completeness theorem and the axiomatizability of $\Delta$ for $\langle \mathbb{Q}; \leq \rangle \vDash \theta$.
+
+It works for some other structures \textbf{BUT} there is no such algorithm in general. Example: $\langle \mathbb{N}; +;\cdot; 0 \rangle$.(Goedel's Incompleteness Theorem)
+
+\end{remark}
+
+\section{Set Theory}
+
+\subsection{Basic set theory}
+
+\begin{definition}
+\begin{enumerate}
+    \item  \emph{extensionality} Sets $A,B$ are \emph{equal} iff
+        \[ \forall x ((x \in A) \leftrightarrow (x \in B)) \]
+    \item \emph{natural Numbers}
+        \[ \N = \{0,1,\dots \} \] and since in set theory we like our objects to be sets we think of
+            \[ 0 = \emptyset, 1 = \{ 0 \} = \{\emptyset\}, \dots, n = \{ 0,\dots, n \}, \dots \].
+    Note that this gives $m < n \Leftrightarrow m \in n \Leftrightarrow m \subseteq n$.
+    \item \emph{ordered pair}
+    The ordered pair $(x,y)$ is the set
+        \{ \{x\}, \{x,y\} \}.
+    \begin{exercise}
+        For any $x,y,z,w$ we have $(x,y) = (z,w)$ iff $x = z$ and $y = w$.
+    \end{exercise}
+    If $A,B$ are sets then $A \times B = \{ (a,b)~|~ a \in A, b \in B \}$
+    $A^2 = A \times A$ and so forth.
+    The set of \emph{finite sequences} of elements of $A$ is the set 
+        \[ \bigcup_{n \in \N} A^n \]
+    (also $A^0=\{\emptyset\}$).
+    \item \emph{functions}
+    Think of a function $f: A \rightarrow B$ as a subset of $A \times B$. Where $A = \mathrm{dom}f$ (\emph{domain}), $B = \mathrm{ran}f$ (\emph{range}).
+    If $X \subseteq A$
+        \[ f[X] = \{ f(a) ~|~ a \in X \} \subseteq B. \]
+    The set of functions from $A$ to $B$ is $B^A \subseteq P(A \times B)$ (powerset).
+\end{enumerate}
+\end{definition}
+
+\subsection{Cardinality}
+\begin{definition}
+Sets $A,B$ are \emph{equinumerous} (or of the \emph{same cardinality}) if there is a bijection $f: A \rightarrow B$. Write $A \sim B$ or $|A|=|B|$.
+\end{definition}
+
+\begin{definition}
+A set $A$ is \emph{finite} if it is equinumerous with some element of $\N$. A set is countably infinite if it is equinumerous with $\N$. \emph{Countable} if it is either of the above.
+\end{definition}
+
+\begin{remark}
+The following are facts:
+\begin{enumerate}
+    \item Every subset of a countable set is countable.
+    \item A set $A$ is countable iff there is an injective function $f: A \rightarrow \N$.
+    \item If $A,B$ are countable then $A\times B$ is countable.
+    \item If $A_0,A_1,\dots$ are countable then $\bigcup_{i \in \N} A_i$ is countable (using Axiom of choice).
+\end{enumerate}
+\end{remark}
+
+\begin{exercise}
+    \begin{enumerate}
+        \item $\mathbb{Q}$ is countable.
+        \item $\bigcup_{i \in \N} A^i$ is countable.
+        \item (Cantor) $\R$ is not countable.
+    \end{enumerate}
+\end{exercise}
+
+\begin{theorem}[Cantor]
+(If $X$ is any set then $\mathbb{P}(X)$ is the set of all subsets of $X$.) There is no surjective function $f: X \rightarrow \mathbb{P}(X)$.
+\end{theorem}
+\begin{proof}
+Suppose there is such a function.
+Let $Y  = \{ y \in X ~|~ y \not \in f(y) \}$.
+There is $z \in X$ with $f(z) = Y$.
+    \begin{itemize}
+        \item If $z \in Y$ then $z \not \in f(z) = Y$
+        \item If $z \not \in Y$ then $z \not \in f(z)$ so $z \in Y$.
+    \end{itemize}
+-- Contradiction.
+\end{proof}
 
 
 \end{document}
