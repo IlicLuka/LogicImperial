@@ -1357,7 +1357,7 @@ It works for some other structures \textbf{BUT} there is no such algorithm in ge
 
 \subsection{Cardinality}
 \begin{definition}
-Sets $A,B$ are \emph{equinumerous} (or of the \emph{same cardinality}) if there is a bijection $f: A \rightarrow B$. Write $A \sim B$ or $|A|=|B|$.
+Sets $A,B$ are \emph{equinumerous} (or of the \emph{same cardinality}) if there is a bijection $f: A \rightarrow B$. Write $A \approx B$ or $|A|=|B|$.
 \end{definition}
 
 \begin{definition}
@@ -1396,5 +1396,415 @@ There is $z \in X$ with $f(z) = Y$.
 -- Contradiction.
 \end{proof}
 
+\begin{definition}
+For sets $A,B$ write
+    \[ |A| \leq |B| \]
+if there is an injective function $f:A \rightarrow B$.
+\end{definition}
 
-\end{document}
+\begin{remark}
+$|X| \leq |\mathbb{P}(X)|$, since $x \rightarrow \{ x \}$ is injective. Since $|X| \neq |\mathbb{P}(X)|$ this means that there is no injective function $\mathbb{P}(X) \rightarrow X$. (see next theorem) We write $|X| < |\mathbb{P}(X)$.
+\end{remark}
+
+\begin{exercise}
+    If $|A| \leq |B|$ and $|B| \leq |C|$ then $|A| \leq |C|$.
+\end{exercise}
+
+\begin{theorem}[Schroeder-Bernstein]\label{Th:Shr_Bernstein}
+Suppose $A,B$ are sets and $f: A \rightarrow B$ and $g: B \rightarrow A$ are injective, then $|A| = |B| (A \approx B)$.
+\end{theorem}
+
+\begin{proof}
+Let $h := g \circ f: A \rightarrow A$. Let $A_0 = A \setminus g[B]$ and for $n > 0$ let $A_n = h[A_{n-1}]$.
+Let 
+    \[ A^* = \bigcup_{n \in \N} A_n \text{ and } B^* = f[A^*]. \]
+Note that, $h[A^*] \subseteq A^*$ so $g[B^*] = h[A^*] \subseteq A^*$.
+\textbf{Claim:} $g[B \setminus b^*] = A \setminus A^*$. Once we have this, $f$ gives a bijection $A^* \rightarrow B^*$ and $g$ gives a bijection $B \setminus B^* \rightarrow A \setminus A^*$.
+So
+    \[ k(a) = \begin{cases} f(a) \text{ if } a \in A^* \\ g(a) \text{ otherwise }\end{cases}.\]
+\textbf{Proof of the claim:} 
+\begin{enumerate}
+    \item Let $a \in A \setminus A^*$. As $a \not \in A_0$ there is $b \in B$ with $g(b) = a$. hen $b \not \in B^*$ as
+        \[ b \in B^* \Rightarrow b \in f[A^*] \Rightarrow g(b) \in h[A^*] \subseteq A^*  \] 
+    but this would imply that
+        \[ a \in A^* \] which is a contrdiction. Therefore 
+        \[ g[B \setminus B^*] = A \setminus A^*. \]
+    \item Let $b \in B$; suppose $g(b) \in A^*$. Show $b \in B^*$.
+    As $g(b) \not \in A_0$ we have $g(b) \in A_n$ for some $ n > 0$. So $g(b) = h(a),$ for some $a \in A_{n-1}$.
+    Thus $g(b) = g(f(a))$ and therefore $b = f(a)$ for some $a \in A^*$. Thus $b \in f[A^*]$ and the other direction of the claim is proven as well. 
+\end{enumerate}
+\end{proof}
+
+\begin{example}
+The following sets are equinumerable:
+\begin{enumerate}
+    \item $S_1 = $ the set of all sequences of $0,1$ $= \{0,1\} ^{\N}$.
+    \item $S_2 = \R$
+    \item $S_3 = \mathbb{P}(\N)$
+    \item $S_4=  \mathbb{P}(\N \times \N)$
+    \item $S_5 = $ set of all sequences of natural numbers $= \N^\N$
+\end{enumerate}
+
+\begin{proof}
+We find injective functions $f_{i,j}: S_i \rightarrow S_j$, where $i,j \in \{ 1, \dots, 5\}$ and then use the Schroeder-Bernstein Theorem.\ref{Th:Shr_Bernstein}.
+
+As $\N \times \N \approx \N$ we get that $S_3 \approx S_4$. Also $S_1 \subseteq S_5 \subseteq S_4$. We have a bijection
+    \[ f_{3,1}: \mathbb{P}(\N) \rightarrow S_1. \]
+For $X \subseteq \N$ we define $f_{3,1}(X) = (a_n)_{n \in \N}$, where 
+    \[ \begin{cases} 0 \text{ if } n \not \in X \\ 
+                    1 \text{ otherwise} \end{cases} \]
+                    
+Furthermore we take $f_{1,2}: (a_n)_{n \in \N} \mapsto 0.a_0a_1, dots$ to be the map onto the decimal expansion, which is obviously injective.
+
+For $f_{2,5}$ we map the decimal expansion onto a sequence
+    \[ f_{2,5}(\pm n.m_1m_2\dots \mapsto (0 \text{or} 1, n, m_1, \dots \] where the first value stands for $\pm$.
+\end{proof}
+\end{example}
+
+\begin{remark}
+\textbf{If $A,B$ are sets is one of}
+    \[ |A| \leq |B| \text{ or } |B| \leq |A| ?\]
+    If we assume the Axiom of Choice (AC) then this question has a positive answer.
+    Also: \textbf{Is there $X \subseteq \R$ with $| \N | < |X| < |\R|$?}
+    [Continuum Hypothesis says 'no' \dots]
+\end{remark}
+
+\subsection{Axioms for Set Theory}
+
+Zermelo-Fraenkel Axioms say how we are allowed to 'build' sets. All can be expressed in a first order language (with $=$) using a single $2$-ary relation symbol $\in$.
+
+We have to avoid the \emph{Russel Paradox}: 
+\[ S = \{ x : x \text{ is a set and } x \not \in x \} \]
+If this is a set, is $S \in S$?.
+[$(\exists S) (\forall x)((x \in S) \leftrightarrow (x \not \in x))$ leads to inconsistency.]
+
+\begin{definition}
+The following are the \emph{Zermelo-Fraenkel Axioms} 1-6
+\begin{enumerate}
+    \item \emph{extensionality}
+        \[ (\forall x)(\forall y)((x=y)\leftrightarrow(\forall z)((z \in x) \leftrightarrow (z \in y))) \]
+        'Two sets are equal iff they have the same elements'.
+    \item \emph{Empty set axiom}
+        \[ (\exists x)(\forall y)( y \not \in x) \]
+        There is a unique set with this property $\emptyset$.
+    \item \emph{Pairing axiom}\\
+        \[ (\forall x)(\forall y)(\exists z)(\forall w) ~ (( w \in z) \leftrightarrow (w = x) \lor (w = y)) \]
+        Given sets $x,y$ we can form $\{x,y\}$.
+    \begin{remark}
+    Using the pairing axiom twice we can form ordered pairs
+        \[ (x,y) = \{ \{x \}, \{x,y\} \} \]
+    Also, form
+        \[ 0 = \emptyset , 1 = \{ \emptyset \}, 2 = \{0,1 \}.\]
+    But --  we can not form $3 = \{0,1,2\}$ using only the axioms above.
+    \end{remark}
+    \item \emph{Union axiom}
+        \[ (\forall A)(\exists B)(\forall x) ~ ((x \in B) \leftrightarrow (\exists z)((z \in A) \land (x \in z)) \]
+    For any set $A$ we want to form the set $B = \bigcup A = \bigcup \{z ~|~ z \in A\} $.
+    \item \emph{Power set axiom}
+        \[ (\forall A)(\exists B)(\forall z) ~ ((z \in B) \leftrightarrow (z \subseteq A)) \]
+    where
+        \[ z \subseteq A \text{ means } (\forall y)((y \in z) \rightarrow (y \in A). \]
+    For any set $A$ we form its powers set $\mathbb{P}(A)$.
+    \item \emph{Axiom scheme for specification}
+    Suppose $P(x,y_1,\dots,y_r)$ is a formula in our language. Then we have an axiom:
+        \[ (\forall A)(\forall y_1) \dots (\forall y_r)(\exists B)(\forall x) ~ ((x \in B) \leftrightarrow ((x \in A) \land P(x,y_1,\dots, y_r)). \]
+    So this guarantees that we can for the subset of $B \subseteq A$, $B = \{ x \in A  ~|~ P(x,y_1,\dots,y_n)\}$
+    for any given set $A$ and any given $y_1,\dots,y_n$.
+    \begin{example}
+    \begin{enumerate}
+        \item Let $C$ be any non empty set and $A \in C$. Then
+            \[ \bigcap C = \{ x \in A ~|~ (\forall z)((z \in C) \rightarrow (x \in z)) \} \]
+        Where $(\forall z)((z \in C) \rightarrow (x \in z))$ is a formula $P(x,C)$.
+        \item 
+        \[ A \times B = \{ w \in \mathbb{P}(\mathbb{P}(A\cup B)) ~|~ (\exists a) (\exists b) ((a \in A) \land ( b \in B) \land w = \{ \{a\},\{a,b\}\}) \}. \]
+    \end{enumerate}
+    \end{example}
+    \item \emph{Axiom of infinity}
+    \begin{definition}
+    For a set $a$ the \emph{successor} of $a$ is
+        \[ a^+ := a \cup \{a\} \]
+    A set $A$ is \emph{inductive} if
+        \[ (\emptyset \in A) \land (\forall x)((x \in A) \rightarrow (x^+ \in A)). \]
+    \end{definition}
+    Now, the \emph{axiom of infinity} is written as the following
+        \[ (\exists A)((\emptyset \in A) \land (\forall x)((x \in A) \rightarrow (x^+ \in A))) \]
+    guaranteeing that there exists an inductive set.
+    \begin{definition}
+    Let $A$ be an inductive set. We can form (using specification) the set
+        \[ \N = \{ x \in A ~|~ \text{ if $B$ is an inductive set, then $x \in B$} \}. \]
+    (Informally this is the intersection of all inductive sets.) This does not depend on the choice of $A$. Also denote this set be $\omega$.
+    \end{definition}
+    \begin{theorem}\label{Th:natural_numbers}
+    \begin{enumerate}
+        \item $\N$ is an inductive set, and if $B$ is an inductive set, then $\N \subseteq B$.
+        \item (Proof by induction works)
+        Suppose $P(x)$ is a property of sets (i.e. a formula) such that
+            \begin{enumerate}
+                \item $P(\emptyset)$ holds 
+                \item For every $k \in \N$, if $P(k)$ holds, then $P(k^+)$ holds. 
+            \end{enumerate}
+            Then $P(n)$ holds for all $n \in \N$.
+    \end{enumerate}
+    \end{theorem}
+    \begin{proof}
+    \begin{enumerate}
+        \item  Exercise, use definition.
+        \item Consider $B \subseteq \N$ given by $B = \{ x \in \N ~|~ P(x) \text{holds} \}$. The conditions $i,ii$ tell us that $B$ is an inductive set, thus it contains $\N$. Therefore $B = \N$.
+    \end{enumerate}
+    \end{proof}
+    Now, we could develop arithmetic in $\N$ (using $n^+$ as $ n+1$ ,etc.), $\mathbb{Z},\mathbb{Q},\R$ 'in the natural way' using the axioms above.
+    \begin{exercise}[Hard exercise]
+        For $m,n \in \N$ write $m \leq n$ to mean $(m = n) \lor (m \in n)$. This is a well-ordering on $\N$.
+    \end{exercise}
+\end{enumerate}
+\end{definition}
+
+\subsection{Well-orderings}
+
+\begin{definition}
+A linear ordering $(A;\leq)$ is a \emph{well ordering} (or a \emph{well ordered set}) if every non-empty subset of $A$ has a \emph{least element}.
+    \[ (\forall X)((X\subseteq A) \land (X \neq \emptyset) \rightarrow (\exists x)((x \in X) \land (\forall y \in X) (x \leq y). \]
+\end{definition}
+
+\begin{example}
+$(\mathbb{Z};\leq)$ not a well ordering with the usual $\leq$. But $(\N;\leq)$ is.
+\end{example}
+
+\begin{definition}
+Suppose $\A_1 = (A_1; \leq_1), \A_2 = (A_2; \leq_2)$ are linear ordered sets. Say that $\A_1,\A_2$ are \emph{similar} (or \emph{isomorphic}) if there is a bijection $\alpha: \A_1 \rightarrow \A_2$ such that
+    \[ \forall a,b \in A_1 ~ a \leq_1 b \Leftrightarrow \alpha(a) \leq_2 \alpha(b) \]
+Write $\A_1 \simeq \A_2$. Say $\alpha$ is a \emph{similarity}. If $\alpha$ suffices the condition except for being bijective, then call it \emph{order-preserving}.
+\end{definition}
+
+\begin{definition}
+\begin{enumerate}
+    \item The \emph{reverse-lexicographic product}
+        \[ \A_1 \times A_2 = (A_1 \times A_2; \leq) \]
+    where
+        \[ (a_1,a_2) \leq (a_1', a_2') \Leftrightarrow (a_2 \leq a_2' \text{ or } ((a_2 = a_2') \land (a_1 \leq a_1')) \]
+    \item \emph{Sum}: Regard $A_1,A_2$ as disjoint (w.l.o.g) and define
+        \[ \A_1 + \A_2 = (A_1 \cup A_2 ; \leq) \]
+    where $\leq$ is the union of $\leq_1, \leq_2$ together with $a_1 \leq a_2$ for all $a_1 \in A_1, a_2 \in A_2$.
+\end{enumerate}
+\end{definition}
+
+\begin{example}
+\begin{enumerate}
+    \item $\N + \N$ is just two copies of $\N$ put one after the other.
+    \item $\{0,1\} \times \N \simeq \N$
+    \item $\N \times \{0,1\} \simeq \N + \N$
+\end{enumerate}
+\end{example}
+
+\begin{lemma}
+\begin{enumerate}
+    \item $\A_1 + \A_2$ and $\A_1 \times \A_2$ are linearly ordered sets.
+    \item If $\A_1,\A_2$ are well-orderings then so are $\A_1 + \A_2$ and $\A_1 \times \A_2$
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+We show that $\A_1 \times \A_2$ is a well-ordering if $\A_1, \A_2$ are. The rest is left as exercise.
+Let $\emptyset \neq X \subseteq A_1 \times A_2$. Let 
+    \[ Y = \{b \in A_2 ~|~ \text{ there is $a \in A$ with $(a,b) \in X$} \} \subseteq A_2 \] 
+Let $y$ be the least element in $Y$. Let 
+    \[ Z= \{ z \in A_1 ~|~ (z,y) \in X \} \]
+This has a least element $x$. Then $(x,y)$ is the least element of $X$.
+\end{proof}
+
+\begin{definition}
+Suppose $\A = (A,\leq)$ is a linearly ordered set. A subset $X \subseteq A$ is an \emph{initial segment} of $A$ if
+    \[ (\forall x \in X)(\forall a \in A)((a \leq x) \rightarrow (a \in X)). \]
+It is \emph{proper} if $X \neq A$.
+\end{definition}
+
+\begin{example}
+\begin{enumerate} 
+    \item Let $b \in A$ and let
+        \[ A[b] = \{ a \in A ~|~ a < b \} \] is a proper initial segment
+    \item \[ A[\leq b] \{ x \in A ~|~ x \leq b \} \] is an initial segment.
+\end{enumerate}
+\end{example}
+
+\begin{lemma}
+If $\A = (A; \leq)$ is a well ordered set, then every proper initial segment $X$ is of the form $A[b]$ for some $b \in A$.
+\end{lemma}
+
+\begin{remark}
+This is not true in general e.g. $\{ x \in \mathbb{Q} ~|~ x \leq \pi \}$
+\end{remark}
+
+\begin{proof}
+Let $b$ be the minimal element of $A \setminus X$.
+\end{proof}
+
+\begin{theorem}\label{Th:compare_wellorders}
+Suppose $\A_1 = (A_1,\leq_1), \A_2 = (A_2,\leq_2)$ are well ordered sets. Then exactly one of the following is true:
+    \begin{enumerate}
+        \item $\A_1,\A_2$ are similar;
+        \item $\A_1$ is similar to a proper segment of $\A_2$;
+        \item $\A_2$ is similar to a proper segment of $\A_1$.
+    \end{enumerate}
+In each case the similarity is unique.
+\end{theorem}
+
+\begin{proof}
+First show: (for uniqueness)
+Suppose we have order preserving
+    \[ \beta,\alpha: \A_1 \rightarrow \A_2 \]
+whose images are initial segments of $\A_2$. Show $\alpha = \beta$.
+\begin{enumerate} 
+    \item[Step 1] Check that if $b \in A_1$ then $\alpha(\A[b]) = \A_2[\alpha(b)]$.
+    \item[Step 2] If $\alpha \neq \beta$ take $b \in A_1$ minimal with $\alpha(b) \neq \alpha(b)$. So $\alpha \upharpoonright \A_1[b] = \beta \upharpoonright \A_1[b] $. By step 1
+        \[ \A_2(\alpha(b)] = \A_2[\beta(b)] \]
+    and concludes $\alpha(b) = \beta(b)$
+\end{enumerate}
+This shows
+\begin{itemize}
+    \item By taking $\A_1 = \A_2$ and $\alpha = \mathrm{id}_{\A_1}$, then $\A_1$ is not similar to a proper initial segment of itself.
+    \item It follows that we cannot have two of 1.,2.,3. holding.
+\end{itemize}
+Then show: (for the existence)
+Suppose $\A_2$ is not similar to an initial segment of $\A_1$. Show $\A_1$ is similar to a proper initial segment of $\A_2$. Look at
+    \[ C= \{ c \in A_1 ~|~ \text{ there is a similarity between $\A_1[\leq c]$ and an initial segment of $\A_2$}. \]
+If $c \in C$ there is a unique $\alpha_c : \A_1[\leq c] \rightarrow \A_2$ with the image being an initial segment of $\A_2$ (by the uniqueness part.
+\textbf{Note:} $C$ is an initial segment of $\A_1$. If $c_1 < c_2 \in C$, then $\alpha_{c_1}$ is the restriction of $\alpha_{c_2}$ to $\A_1[\leq c_1]$.Let $\alpha = \bigcup \{\alpha_c ~|~ c \in C \}$.
+Then $\alpha$ is a similarity between $C$ and an initial segment of $\A_2$.
+If $C = \A_1$ we are done.
+Otherwise, let $a$ be the minimal element of $\A_1 \setminus C$.
+Now, $\alpha(C) \neq \A_2$ since then $\A_2 \simeq C$.
+So $\alpha(C) = \A_2[b]$ for some $b \in A_2$. Now we can extend $\alpha$ by sending $a \mapsto b$ and get that $a \in C$ which is a contradiction.
+
+\end{proof}
+
+\begin{remark}
+In the notation of the theorem above, we have, in particular, an injective function
+\[ A_1 \rightarrow A_2 (\text{cases 1), 2)}) \]
+or an injective function 
+\[A_2 \rightarrow A_1\].
+So either $|A_1| \leq |A_2|$ or $|A_2| \leq |A_1|$.
+The axiom of choice will imply that every set can be well-ordered. In particular, every two sets are comparable by size and $\leq$ is a total ordering on the sets.
+\end{remark}
+
+\subsection{Ordinals}
+
+The \emph{ordinals} are special well-ordered sets, generalizing the notion of natural number:
+    \[ 0 = \emptyset \]
+    \[ 1 = \{0\} \]
+    \[ 2 = \{0,1\} \]
+    \[ \vdots \]
+For $m,n \in \omega$ then $m < n \Leftrightarrow m \in n $.
+
+\begin{definition}
+\begin{enumerate}
+    \item A set $X$ is \emph{transitive} if every element of $X$ is a subset of $X$. (I.e. $y \in x, x \in X $ then $y \in X$.)
+    \item A set $\alpha$ is an \emph{ordinal} if 
+    \begin{itemize}
+        \item $\alpha$ is a transitive set;
+        \item the relation $<$ on $\alpha$ given by
+            \[ x < y \Leftrightarrow x \in y \]
+        is a strict well-ordering of $\alpha$
+    \end{itemize}
+    \end{enumerate}
+\end{definition}
+
+\begin{remark}
+If $\alpha$ is an ordinal, then by definition $\alpha \not \in \alpha$.
+\end{remark}
+
+\begin{lemma}
+If $\alpha$ is an ordinal then so is $\alpha^+ = \alpha \cup \{ \alpha \}$.
+\end{lemma}
+\begin{proof}
+As $\alpha$ is transitive, so is $\alpha^+$. The ordering $\in$ on $\alpha^+$ is just the same as on $\alpha$ with the extra element $\alpha$ added as the greatest element.
+\end{proof}
+
+\begin{corollary}
+If $n \in \omega$ then $n$ is an ordinal.
+\end{corollary}
+
+\begin{proof}
+$\emptyset$ is an ordinal, so this follows from the previous lemma with induction. (\ref{Th:natural_numbers}
+\end{proof}
+
+\begin{proposition}\label{Prop:Ordinal_attributes}
+\begin{enumerate}
+    \item If $\alpha$ is an ordinal then $\alpha \not \in \alpha$.
+    \item If $\alpha$ is an ordinal and $\beta \in \alpha$ then $\beta$ is an ordinal.
+    \item If $\alpha,\beta$ are ordinals and $\alpha \subsetneqq \beta$ then $\alpha \in \beta$.
+    \item If $\alpha$ is an ordinal then $\alpha = \{ \beta ~|~ \beta \text{ is an ordinal and } \beta \in \alpha  \}$
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+\begin{enumerate}
+    \item definition implies this.
+    \item same as above.
+    \item As $ \alpha \subsetneqq \beta $ so $\beta \setminus \alpha \neq \emptyset$ so it has a least element $\gamma$. Show that $\gamma = \alpha$.
+    \item by 2)
+\end{enumerate}
+All are in more detail on blackboard. (As is a big part of this subsection in general.
+\end{proof}
+
+\begin{definition}
+If $\alpha, \beta$ are ordinals, write
+\[ \alpha < \beta \] to mean
+\[ \alpha \in \beta \].
+\end{definition}
+
+\begin{theorem}\label{Th:ordinal_ordering}
+If $\alpha,\beta,\gamma$ are ordinals.
+\begin{enumerate}
+    \item If $\alpha < \beta $ and $\beta < \gamma$ then $\alpha < \gamma$.
+    \item If $\alpha \leq \beta$ and $\beta \leq \alpha$, then $\alpha = \beta$.
+    \item Exactly one of $\alpha < \beta$, $\alpha = \beta$ and $\beta < \alpha$ holds.
+    \item If $X$ is an non-empty set of ordinals then $X$ has a least element $\delta$.
+    Moreover, $\delta = \bigcap X$. "The collection of ordinals is well-ordered".
+\end{enumerate}
+\end{theorem}
+\begin{proof}
+\begin{enumerate}
+    \item The first one is easy to check.
+    \item By the first and $\alpha \not \in \alpha$.
+    \item Show that, if $\alpha \neq \beta$ then $\alpha \subsetneqq \beta$ or $\beta \subsetneqq \alpha$. Consider
+    \[ \alpha \cap \beta \]
+    and show that this is an ordinal. If $\alpha \not \subsetneqq \beta$ then $\alpha \cap \beta \subsetneqq \alpha$ and the symmetric case. By \ref{Prop:Ordinal_attributes} we get that $\alpha \cap \beta \in \alpha$ and $\alpha \cap \beta \in \beta$. Thus $\alpha \cap \beta \in \alpha \cap \beta$ which is a contradiction.
+    \item See notes.
+\end{enumerate}
+\end{proof}
+
+\begin{corollary}
+\begin{enumerate}
+    \item If $X$ is a non-empty set of ordinals, then $\bigcup X$ is an ordinal.
+    \item $\omega$ is an ordinal.
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+\begin{enumerate}
+    \item By \ref{Th:ordinal_ordering}, $X$ is well-ordered by $\in$. So it is enough to show that $\bigcup X$ is a transitive set (exercise).
+    \item Check that $\bigcup \omega = \omega$; then apply the first part.
+\end{enumerate}
+\end{proof}
+
+\begin{remark}
+
+Now we can form some new ordinals by taking succesors:
+\[ \omega ^+ = \{ 0,1, \dots, \omega \} \]
+\[ (\omega^+)^+ = \{ 0,1,\dots,\omega,\omega^+ \} \]
+\[ \vdots \]
+
+\end{remark}
+
+\begin{theorem}
+If $(A;\leq)$ is a well-ordered set, then there is a \textbf{unique} ordinal $\alpha$ which is similar to $(A;\leq)$.
+\end{theorem}
+
+\begin{proof}
+\begin{itemize}
+    \item[Uniqueness:]  Suppose $(A;\leq)$ is similar to ordinals $\alpha,\beta$. So $\alpha,\beta$ are similar. W.l.o.g. $\alpha \leq \beta$, so if $\alpha \neq \beta$ then $\alpha < \beta$. $\alpha$ is therefore a proper initial segment of $\beta$ (\ref{Prop:Ordinal_attributes}). But by \ref{Th:compare_wellorders} no well-ordered set is similar to a proper initial segment of itself. Contradiction.
+    \item[Existence:] Let
+    \[ X = \{ x \in A ~|~ \text{ the initial segment $A[x]$ is similar to an ordinal} \}. \]
+    Note: If $A \neq \emptyset$ then the least element of $A$ is in $X$.
+\end{itemize}
+\end{proof}
