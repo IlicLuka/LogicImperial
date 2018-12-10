@@ -1228,7 +1228,7 @@ By induction on the number of connectives and quantifiers in $\phi$.
 \subsection{Equality}
 \textbf{MISSING}
 
-\begin{theorem}\label{Th:Loewenheim_Skolem}
+\begin{theorem}[Loewenheim-Skolem]\label{Th:Loewenheim_Skolem}
 Suppose $\LL^=$ is a countable first order language with equality and $\mathcal{B}$ is a normal $\LL^=$ structure. Then there is a countable normal $\LL^=$-structure $\A$ such that for every closed $\LL^=$-formula $\phi$
     \[ \mathcal{B} \vDash \phi \Leftrightarrow \A \vDash \phi \]
 \end{theorem}
@@ -1262,14 +1262,14 @@ So if $\phi$ is closed and $\mathcal{B} \vDash \phi$ then $\hat{\C} \vDash \phi$
     It is \emph{without endpoints} if 
         \[ \phi_5: \quad (\forall x_1)(\exists x_2) (x_1 < x_2) \]
     and
-        \[ \phi_f: \quad (\forall x_1)(\exists x_2) (x_2 < x_1) \quad . \]
+        \[ \phi_6: \quad (\forall x_1)(\exists x_2) (x_2 < x_1) \quad . \]
     Let $\Delta = \{\phi_1, \dots,\phi_6\}$.
 \end{definition}
 
 \begin{theorem}\label{Th:QsimR}
 \begin{enumerate}
     \item For every closed $\LL^=$-formula $\phi$
-        \[ \mathbb{Q} \vDash \Leftrightarrow \R \vDash \phi \]
+        \[ \mathbb{Q} \vDash \phi \Leftrightarrow \R \vDash \phi \]
     \item There is an algorithm to decide, given a closed $\LL^=$-formula $\phi$, whether $\mathbb{Q} \vDash \phi$ or $\mathbb{Q} \vDash (\lnot \phi)$.
 \end{enumerate}
 \end{theorem}
@@ -1796,15 +1796,410 @@ Now we can form some new ordinals by taking succesors:
 
 \end{remark}
 
-\begin{theorem}
+\begin{theorem}\label{Th:Every_set_sim_to_ordinal}
 If $(A;\leq)$ is a well-ordered set, then there is a \textbf{unique} ordinal $\alpha$ which is similar to $(A;\leq)$.
 \end{theorem}
 
-\begin{proof}
+\begin{proof} 
+We have to show uniqueness and existence.
 \begin{itemize}
     \item[Uniqueness:]  Suppose $(A;\leq)$ is similar to ordinals $\alpha,\beta$. So $\alpha,\beta$ are similar. W.l.o.g. $\alpha \leq \beta$, so if $\alpha \neq \beta$ then $\alpha < \beta$. $\alpha$ is therefore a proper initial segment of $\beta$ (\ref{Prop:Ordinal_attributes}). But by \ref{Th:compare_wellorders} no well-ordered set is similar to a proper initial segment of itself. Contradiction.
     \item[Existence:] Let
     \[ X = \{ x \in A ~|~ \text{ the initial segment $A[x]$ is similar to an ordinal} \}. \]
-    Note: If $A \neq \emptyset$ then the least element of $A$ is in $X$.
+    Note: If $A \neq \emptyset$ then the least element of $A$ is in $X$. By uniqueness above, if $x \in X$ there is a unique ordinal $\alpha_x$ similar to $A[x]$. Let
+        \[ S = \{ \alpha_x ~|~ x \in X \} \]
+    \textbf{Claim: } $S$ is an ordinal.
+    We need to show that $S$ is a transitive set (since previous results already say that it is well ordered).
+    I.e. we need to show that every $\beta \in \alpha_x \in S$ is in fact an element of $S \ni b$.
+    Let $\theta: A[x] \rightarrow \alpha_x$ be the similarity.
+    Let $A \ni y \theta^{-1}(\beta)$. Then $\theta$ restricted to $A[y]$ gives a similarity
+    $\theta \upharpoonright A[y]: A[y] \rightarrow \{ \delta \in \alpha_x ~|~ \delta < \beta \}$. Therefore $\beta = \alpha_y$, which proves the claim. (Every ordinal is the set of smaller ordinals.)
+    Denote $S$ by $\alpha$ (as it is an ordinal by the claim above.) If we know $X = A$ we are done, since then
+        \[ x \mapsto \alpha_x \text{gives a similarity} A \rightarrow \alpha . \]
+    By what we already did, $X$ is an initial segment. So if $X \neq A$ it is proper i.e. there is a $z \in A \setminus X$ with $X = A[z]$ (\ref{Th:compare_wellorders}).
+    We know that $x \mapsto \alpha_x$ gives a similarity $X \rightarrow \alpha$. So $z \in X$, by definition of $X$. That is a contradiction. Thus $ X= A$ and therefore $A \simeq \alpha$.
 \end{itemize}
 \end{proof}
+
+\begin{remark}
+Why is $S$ a set? We need an extra axiom to justify this -- the axiom of replacement.
+\end{remark}
+
+\begin{definition}
+Suppose $F(x,y,z_1,\dots,z_r)$ is a formula (in our first order language) with the following property:\\
+whenever $s_1,\dots,s_r$ are sets and $b$ is a set, there is a unique set $a$ such that $F(a,b,s_1,\dots,s_r)$ holds. The $s_1,\dots,s_r$ are referred to as \emph{parameters}, and $F(x,y,s_1,\dots,s_r)$ gives us a "function on sets" $b \mapsto a$. $F$ is called an \emph{operation on sets} (with $z_1,\dots,z_r$ being \emph{parameter variables}).
+\end{definition}
+
+\begin{remark}
+This is very similar to the definition of a function. But there we need the domain to be a set, and the set of all sets does not fulfill this condition.
+\end{remark}
+
+\begin{example}
+\begin{enumerate}
+    \item No parameter variables: $F(a,b)$ says "$a$ is the power set of $b$".
+    \item $F(a,b,c)$ (with parameter $c$) says "$a$ is the set of all functions from $b$ to $c$".
+\end{enumerate}
+\end{example}
+
+\begin{definition}[Axiom 8 of the ZF axioms ]
+Suppose $F(x,y, z_1,\dots,z_r) $ is an operation on sets as above and $s_1,\dots,s_r$ are sets and $B$ is a set. Then there is a set $A$ such that
+    \[ A = \{ a ~|~ F(a,b,s_1,s\dots,s_r) \text{ holds for some $b \in B$} \}. \]
+\end{definition}
+
+\begin{remark}
+In the proof of (\ref{Th:Every_set_sim_to_ordinal} we obtain $S$ from $X$ using the operation $F(a,b)$ which says "either $b$ is a well-ordered set similar to the ordinal $a$ or $b$ is not a well-ordered set and $a = \emptyset$. Apply this to $B = \{ A[x] ~|~ x \in X \}$ to get $S$.
+\end{remark}
+
+\subsection{Transfinite induction}
+
+\begin{theorem}[Transfinite induction]\label{Th:transfinite_induction}
+Suppose $P(x)$ is a property of sets. Assume that for all ordinals $\alpha$ 
+    \begin{equation}
+        \text{if $P(\beta)$ holds for all ordinals $\beta < \alpha$, then $P(\alpha) $ holds.}
+    \end{equation}
+Then $P(\gamma)$ holds for all ordinals $\gamma$.
+\end{theorem}
+
+\begin{proof}
+Note that if $\alpha = 0 = \emptyset$ then $P(\beta)$ holds for all $\beta < \alpha$. So by (1) $P(0)$ holds. Suppose for a contradiction that there is some ordinal $\gamma$ such that $P(\gamma)$ does not hold. There is a least such $\gamma$: call it $\alpha$. Thus for any ordinal $\beta < \alpha$ $P(\beta)$ holds. But then by (1) $P(\alpha)$ holds -- contradiction.
+\end{proof}
+
+\begin{theorem}\label{Th:|A|=|AxA|}
+Suppose $\alpha$ is an infinite ordinal (i.e. $\omega < \alpha)$. Then $\alpha \approx \alpha \times \alpha$.
+\end{theorem}
+
+\begin{corollary}
+\begin{enumerate}
+    \item If $(A; \leq)$ is an infinite well-ordered set, then $|A| = |A \times A|$.
+    \item Assuming the axiom of choice (or the equivalent statement that every set can be well ordered), if $A$ is any infinite set then $|A| = |A \times A|$. 
+\end{enumerate}
+\end{corollary}
+
+\begin{proof}
+\begin{enumerate}
+    \item By (\ref{Th:Every_set_sim_to_ordinal}) there is an ordinal $\alpha$ similar to $A$ and the result is an immediate consequence of (\ref{Th:|A|=|AxA|}).
+    \item Since $A$ can be well ordered under our assumptions this is an immediate consequence itself.
+\end{enumerate}
+\end{proof}
+
+\begin{proof}[Proof of the theorem]
+\begin{enumerate}
+    \item Assume: if $\omega \neq \beta < \alpha$ then $\beta \approx \beta \times \beta$. We want to show the statement via transfinite induction.
+    \item We may assume: if $\beta < \alpha$ then $|\beta| < |\alpha|$. Implies $|\beta^+| < |\alpha|$.
+    \item Enough to show $\alpha \approx \alpha \times \alpha$ by an earlier result.
+\end{enumerate}
+\end{proof}
+
+\textbf{Step 1:} Prove the following.\\
+Suppose we have a well ordering $\leq$ of $A = \alpha \times \alpha$ such that for all $x \in A$
+    \[ |A[x]| < |\alpha|. \]
+Then $|\alpha| = |\alpha \times \alpha|$.
+\begin{proof}
+By \ref{Th:Every_set_sim_to_ordinal} there is an ordinal $\gamma$ which is similar to $(A;\leq)$. Let $f: \gamma \rightarrow A$ be the similarity. Show: $\gamma \subseteq \alpha$.\\
+Let $\mu \in \gamma$ so $\mu < \gamma$. As $f$ is a similarity, it gives a bijection:
+    \[ \mu = \{ \delta \in \gamma ~|~ \delta < \mu \} \rightarrow A[f(\mu)]. \]
+Thus $|\mu| = A[f(\mu)] < |\alpha|$.
+Thus $\mu < \alpha$ and furthermore $\mu \in \alpha$.
+\end{proof}
+
+\textbf{Step 2:} Find an ordering $\leq$ on $\alpha \times \alpha = A$ as in step 1.
+\begin{proof}
+For $\lambda < \alpha$ let
+    \[ A_\lambda = \{ (\theta,\zeta) \in \alpha \times \alpha ~|~ \max(\theta, \zeta) = \lambda \}. \]
+Define $\leq$ on $A$ by:
+    \[ (\theta',\zeta') < (\theta,\zeta) \leftrightarrow \max(\theta',\zeta') < \max(\theta,\zeta)\] or \[ \max(\theta',\zeta') = \lambda = \max(\theta,\zeta)  \] and one of the following
+\begin{enumerate}
+    \item $\zeta = \zeta' =\lambda$ and $\theta' < \theta$
+    \item $\zeta' < \zeta = \lambda$
+    \item $\theta = \theta' =\lambda$ and $\zeta < \zeta'$
+\end{enumerate}
+
+\textbf{Check:} $\leq$ is a well-ordering of $A$.
+\textbf{show:} property in step 1 holds.
+Let $x = (\theta,\zeta) \in A$. Let $ \lambda = \max (\theta,\zeta)$; may assume $\lambda \geq \omega$. Let $\mu = \lambda^+$ so $\mu < \alpha$ and by the induction hypothesis
+    \[ |\mu \times \mu| = |\mu| < |\alpha|. \]
+    \[ \{ y \in A ~|~ y < x \} \subseteq \{(\theta',\zeta') \in A: \max (\theta',\zeta') \leq \lambda \} \subseteq \mu \times \mu. \]
+Therefore
+    \[ |A[x]| \leq | \mu \times \mu| < |\alpha|. \]
+\end{proof}
+
+\subsection{Transfinite recursion}
+Allows us to construct, for ordinals $\alpha$, sets $G(\alpha)$ so that $G(\alpha)$ is obtained from sets $G(\beta)$, $\beta < \alpha$ by applying an operation $F$.
+    \[ G(0),G(1),\dots,G(\omega),G(\omega^+),\dots,G(\beta),\dots (\beta < \alpha) \]
+    \[ \xrightarrow{F} G(\alpha) \]
+    \[ G\upharpoonright \alpha: \alpha \rightarrow \{ G(\beta) ~|~ \beta < \alpha \} \]
+    where the former is a set, by the axiom of replacement.
+\textbf{Notation:} $F$ is an operation on sets. Denote by $F(b)$ the result of applying $F$ to the set $b$.
+
+\begin{theorem}[Transfinite recursion]
+Suppose $F$ is an operation. Then there is an operation $G$ such that for all ordinals $\alpha$ we have
+    \[ G(\alpha) = F(G\upharpoonright \alpha). \]
+If $G'$ is another such operation then 
+    \[ G(\alpha) = G'(\alpha) \]
+for all ordinals $\alpha$.
+\end{theorem}
+
+\begin{proof}
+Omitted. Can be found on blackboard.
+\end{proof}
+
+\begin{remark}
+In practice, we usually do not write $F$ down as a first order formula.
+\end{remark}
+
+\begin{example}
+Application:\\
+Lindenbaum-Lemma:
+Suppose $\LL$ is a first order language whose alphabet of symbols can be well-ordered. Suppose $\Sigma$ is a consistent set of closed $\LL$-formulas. Then there is a consistent set $\Sigma^* \supseteq \Sigma$ of closed $\LL$-formulas such that for every closed $\LL$ formula $\psi$ either
+    \[ \Sigma^* \vdash \psi \]
+or
+    \[ \Sigma^* \vdash (\lnot \psi) \]
+
+\begin{proof}
+The set of $\LL$-formulas can be well-ordered. Any subset of a well-ordered set us well-ordered so the set of closed $\LL$-formulas is well-ordered. Any well-ordered set is similar to some ordinal. (\ref{Th:Every_set_sim_to_ordinal})
+Thus we can write the set of closed $\LL$-formulas as
+    \[ \{ \phi_\alpha ~|~ \alpha < \lambda \} \]
+for some ordinal $\lambda$.
+Define for any ordinal $\alpha$ a consistent set $G(\alpha) \geq \Sigma$ of closed $\LL$-formulas
+\[ G(\alpha) = \begin{cases} \Sigma \cup \dots \\ \Sigma \cup \dots \end{cases} \]
+\end{proof}
+\end{example}
+
+\begin{remark}
+Can use similar arguments at other parts in the proof of the completeness theorem to get that completeness holds. The same for compactness etc.
+\end{remark}
+
+\begin{definition}[\emph{Axiom of regularity(Foundation)}]
+ZF9: \[ (\forall x)((x \neq \emptyset) \rightarrow (\exists a)((a \in x) \land ( a \cap x = \emptyset)) \]
+In particular, there is no set $b$ with $b \in b$. We will not use this axiom.
+\end{definition}
+
+\begin{definition}
+
+The 9 axioms we wrote down until now, are the axioms for 
+\emph{Zermelo-Fraenkel set theory}.
+
+\end{definition}
+
+\section{Axiom of Choice and Consequences}
+
+\subsection{Statement and well-orderings}
+
+\begin{definition}
+The \emph{Axiom of Choice (AC)} is the formula stating the following:\\
+Suppose $A$ is a set of non-empty sets. Then there is a function
+\[ f: A \rightarrow \bigcup A \] such that $f(a) \in a$ for every $a \in A$.
+\end{definition}
+
+\begin{definition}
+The set of the Zermelo-Fraenkel axioms together with the Axiom of Choice is denoted by ZFC.
+\end{definition}
+\begin{example}
+Suppose $X$ is any non-empty set. Let
+\[ A = \mathbb{P}(X) \setminus \emptyset .\]
+By AC there is a function
+\[ f: A \rightarrow X, f(Y) \in Y \text{ for all } \emptyset \neq Y \subseteq X. \]
+Such a function is called a \emph{choice function} (on the subsets of $X$).
+\end{example}
+
+\begin{remark}
+If $(X;\leq)$ is a well-ordered set we do not need the axiom of choice to get a choice function on $X$: 
+Define for $\emptyset \neq Y \subseteq X$
+\[ f(Y) = \min(Y). \]
+\[ f= \{ (Y,a) \in (\mathbb{P} \setminus \emptyset) \times X ~|~ a = \min(Y) \} \]
+\end{remark}
+
+\begin{theorem}
+Suppose $X$ is a non-empty set and $f: \mathbb{P} \setminus \emptyset \rightarrow X$ is a choice function. Then there is a well-ordering $\leq$ of $X$, i.e. a well ordered set $(X;\leq)$
+\end{theorem}
+
+\begin{proof}
+Chose one element of the set. Declare it as your smallest element. Then chose from the remaining elements, etc. For a more formal and exact proof we use the following Lemma: \begin{lemma}[Hartogs' Lemma]\label{Lm:Hartogs}
+For any set $X$ there is an ordinal $\alpha$ such that there is no injective function 
+\[ h: \alpha \rightarrow X \]
+\end{lemma} More formally, define $\tilde{X} = X \cup \{ \infty \}$. Use transfinite recursion and the choice function to define an operation $G$. For an ordinal $\gamma$:
+\[ G(\gamma) = \begin{cases} f(X \setminus \{ G(\beta) ~|~ \beta < \gamma \} \text{ if } X \setminus \{ G(\beta) ~|~ \beta < \gamma \} \neq \emptyset \\
+\infty \text{ otherwise.} \end{cases} \]
+Note: If $\infty \not \in (G \upharpoonright \gamma)$ then $G \upharpoonright \gamma$ is an injective function $\gamma \rightarrow X$. By Hartogs' Lemma there is an ordinal $\alpha$ such that $G(\alpha) = \infty$. Take the least such ordinal and call in $\beta$. Then
+\[ g = G \upharpoonright \beta: \beta \rightarrow X \] is injective and surjective. So $g: \beta \rightarrow X$ is a bijection. Define $\leq$ on $X$ by
+\[ x_1 \leq x_2 \Leftrightarrow g^{-1}(x_1) \leq g^{-1}(x_2) \] 
+\end{proof}
+
+\begin{proof}[Proof of Hartogs' Lemma]
+Given $A$ any set, find an ordinal $\alpha$ with no injective function $\alpha \rightarrow X$. Consider:
+\[ Y = \{(Z; \leq_Z) ~|~ Z \subseteq X \text{ and $\leq_|$ is a well-ordering on $Z$} \}. \]
+This is a set by specification. Let 
+\[ S = \{ \beta ~|~ \beta \text{ is an ordinal similar to some} (Z;\leq_Z) \in Y \} \]
+SO 
+\[ S = \{ \beta ~|~ \text{ $\beta$ is an ordinal and there is an injective function } \beta \rightarrow X \}. \]
+Let $\sigma = \bigcup S$. This is an ordinal and $\beta < \sigma \dots$
+\end{proof}
+
+\begin{corollary}[Assuming ZF]\label{Cor_AC=WO} AC is equivalent to to the following \emph{Well-Ordering Principle} (WO): If $A$ is any set there is $\leq_A \subseteq A \times A$ such that $(A;\leq_A)$ is a well-ordered set. 
+\end{corollary}
+
+\begin{corollary}[Assuming ZFC]
+\begin{enumerate}
+    \item If $A$ is any set there s an ordinal $\alpha$ with $\alpha \approx A$.
+    \item If $A,B$ are sets then one of 
+        \[ |A| \leq |B| \quad |B| \leq |A| \]
+    holds.
+    \item (Fundamental Theorem of Cardinal Arithmetic -- FTCA) \label{Th:FTCA}
+    If $A$ is any infinite set, then $|A \times A| = |A|.$
+\end{enumerate}
+\end{corollary}
+
+\begin{lemma}[Assuming ZFC]
+For sets $A,B$ with $A \neq \emptyset$ we have
+    \[ |A| \leq |B| \leftrightarrow \text{ there is a surjective function } h: B \rightarrow A. \]
+\end{lemma}
+\begin{proof}
+Was in the problem class.
+\end{proof}
+
+\subsection{Cardinals and Cardinal Arithmetic}
+Assume ZFC.
+\begin{definition}
+An ordinal $\alpha$ is a \emph{cardinal} if it is not equinumerous with any $\beta < \alpha$. (E.g. ig $n \in \omega$ then $n$ is a cardinal; if $\beta$ is infinite then $\beta^+$ is not a cardinal as $\beta \approx \beta^+$.)
+\end{definition}
+
+\begin{lemma}
+\begin{enumerate}
+    \item Suppose $\gamma$ is any ordinal. There is a (unique) cardinal $\alpha$ with $\alpha \approx \gamma$.
+    \item Suppose $A$ is any set. There is a unique cardinal $\alpha$ such that $A \approx \alpha$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+\begin{enumerate}
+    \item Take the least element of 
+    \[ \{ \beta \leq \gamma ~|~ \beta \approx \gamma \}. \]
+    \item We know that there is an ordinal $\gamma$ with $\gamma \approx A$. Use 1. .
+\end{enumerate}
+\end{proof}
+
+\begin{definition}
+The unique cardinal equinumerous with $A$ is called the \emph{cardinality} of $A$. Denote it by $\mathrm{card}(A)$ or $|A|$.
+\end{definition}
+
+\begin{remark}
+Note that this notation coincides with the previous usage of $|A|$. There is an injective function $f: A \rightarrow B$ iff card$(A) \leq$ card$(B)$
+\end{remark}
+
+\begin{remark}
+If $\alpha$ is an ordinal then $\alpha$ is a cardinal iff $|\alpha| = \alpha$. E.g. if $A$ is a countably infinite set, then $|A| = \omega$.
+\end{remark}
+
+\begin{definition}
+Suppose $A,B$ are disjoint sets with $|A| = \kappa$ and $|B| = \lambda$. Let $\kappa + \lambda$ be $|A \cup B|$ and $\kappa \cdot \lambda$ be $|A \times B|$.
+\end{definition}
+
+ \begin{remark}
+ This does not depend on the choice of $A,B$.
+ \end{remark}
+ 
+ \begin{theorem}
+ Suppose $\kappa,\lambda$ are cardinals, $\kappa \leq \lambda$ and $\lambda$ is infinite. Then
+ \begin{enumerate}
+     \item $\kappa + \lambda = \lambda$.
+     \item $\kappa \cdot \lambda = \lambda$ (if $\kappa \neq \emptyset$.
+ \end{enumerate}
+ \end{theorem}
+ 
+\begin{proof}
+\begin{enumerate}
+    \item We use part 2.:
+    \[ \lambda \leq \kappa + \lambda \leq \lambda + \lambda = 2 \cdot \lambda = \lambda \]
+    \item As $\kappa \subseteq \lambda$ we have $\kappa \times \lambda \subseteq \lambda \times \lambda$. Thus $\kappa \cdot \lambda \leq \lambda$ (By FTCA \ref{Th:FTCA})
+    Since $\kappa \neq \emptyset$ obviously $\lambda \leq |\kappa \times \lambda| = \kappa \cdot \lambda$.
+\end{enumerate}
+\end{proof}
+
+\begin{theorem}
+Suppose $A$ is an infinite set of cardinality $\lambda$. Suppose each element of $A$ is a set of cardinality $\leq \kappa$. Then
+\[ |\bigcup A| \leq \lambda \cdot \kappa. \]
+\end{theorem}
+
+\begin{proof}
+We can assume $ \emptyset \not \in A$. For each $a \in A$ the set $S_a$ of surjective functions $\kappa \rightarrow a$ is non-empty. Assuming AC there is a function $F: A \rightarrow \bigcup_{a \in A} S_a$ with
+\[ F(a): \kappa \rightarrow a \text{ a surjective function.} \] Denote this function by $F_a$. Let $h: \lambda \rightarrow A$ be a bijection. Now define $G : \lambda \times \kappa \rightarrow \bigcup A$ by 
+\[G(\alpha,\beta) = F_{h(\alpha)}(\beta).\] This is surjective. So by an earlier result
+\[ |\lambda \times \kappa| \geq |\bigcup A| \] i.e.
+\[ | \bigcup A | \leq \lambda \cdot \kappa. \]
+\end{proof}
+
+\begin{example}
+\begin{enumerate}
+    \item Suppose $A$ is an infinite set, $|A| = \lambda \geq \omega$. Let $S$ be the set of finite sequences of elements of $A$. So 
+    \[ S = \bigcup_{n \in \omega} A^n .\]
+    Then $|S| = |A| = \lambda$.
+        \begin{proof}
+        For $n \in \omega$, $|A|^n = |A|$ by repeated use of FTCA. Then by the result above $|S| \leq \omega \cdot |A| = \lambda.$
+        $A \subseteq S$, so  $|S| \geq \lambda$.
+        \end{proof}
+    \item Consider $\R$ as a vector space over $\mathbb{Q}$. Suppose $B \subseteq \R$ such that the linear span of $B$ (over $\mathbb{Q}$) is $\R$. Then $|B| = |\R|$.
+    Obviously, $|B| \leq |\R|$. If $x \in \R$ there are $n \in \N$ such that for some $q_0,\dots,q_n \in \mathbb{Q}$ and $b_0,\dots,b_n \in B$ with 
+        \[ x = \sum_{i = 0}^{n} q_i b_i. \]
+    Let $S_1$ be the set of finite sequences from $\mathbb{Q}$ and $S_2$ the set of all sequences of $B$.
+    Consider $S_1 \times S_2 \supseteq T = \{ ((q_0,\dots,q_n),(b_0,\dots,b_n)\}$. We have a surjection \[T \rightarrow \R \quad ((q_0,\dots,q_n),(b_0,\dots,b_n) \mapsto \sum_{i=0}^n q_I b_i \]. By cardinal arithmetic we have
+    \[ |\R| \leq |T| \leq |S_1 \times S_2| = \omega \cdot |B| \]
+    Since $|\R| > \omega$ we have $|B| = |\R|$. 
+\end{enumerate}
+\end{example}
+
+\subsection{Zorn's Lemma}
+
+\begin{definition}
+A \emph{partially ordered set} (poset) $(A;\leq)$ satisfies
+    \[ \forall x,y,z \in A \quad x \leq y \leq z \rightarrow x \leq z \]
+    \[ \land (x \leq y \land y \leq x) \rightarrow x = y \]
+    \[ \land (x \leq x). \]
+A \emph{chain} $C$ in a poset $(A;\leq)$ is a subset $C \subseteq A$ such that 
+\[ \forall x,y \in C \quad (x \leq y) \lor (y \leq x) \]
+An \emph{upper bound} of $C$ in $A$ is $a \in A$ such that \[\forall x \in C \quad x \leq a.\]
+\end{definition}
+
+\begin{example}
+$(\mathbb{P}(X);\subseteq)$ is a poset.
+If $C \subseteq \mathbb{P}(X)$ is a chain than $\bigcup C$ is an upper bound for $C$ in $\mathbb{P}(X)$.
+\end{example}
+
+\begin{definition}
+\emph{Zorn's Lemma} is:
+Suppose $(A;\leq)$ is a non-empty poset in which every chain has an upper bound in $A$. Then $A$ has a maximal element.
+\end{definition}
+
+\begin{theorem}\label{Th:AC=ZL}
+$\mathrm{ZF} \vdash (\mathrm{AC} \leftrightarrow \mathrm{ZF})$ or stated differently:
+\begin{enumerate}
+    \item Assuming ZFC, then ZL holds.
+    \item Assuming ZF and ZL, then AC holds.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+Let $f: \mathbb{P}(A) \setminus\{\emptyset\} \rightarrow A$ be a choice function. Suppose for a contradiction that $A$ has no maximal element. Let $C \subseteq A$ be a chain. By assumption there is an upper bound for $C$ in $A$. Call it $y$. Since we assume that $A$ has no maximal element there is some $z \in A$ such that $z > y$. Therefore $z > c$ for all $c \in C$. \\
+Use transfinite recursion to define an operation $G$ such that for all ordinals $\alpha$
+\[ G(\alpha) \in A \text{ and } G(\alpha) = f(\{z \in A ~|~ z > G(\beta) \text{ for all  } \beta < \alpha \}). \]
+So $G(0) < G(1) < \dots < G(\beta) < \dots$ i.e. for all ordinals $\beta < \alpha$ 
+    \[ G(\beta) < G(\alpha). \]
+By Hartogs' Lemma this is impossible.
+\end{proof}
+
+\begin{example}
+Assume ZFC. Suppose $V$ is a vector space over a field $F$. Then $V$ has a basis over $F$. Use ZL.
+Let $A$ be the set of linearly independent subsets of $V$, ordered by $\subseteq$.
+Let $C$  be a chain in $A$ -- we need to find an upper bound in $A$. In fact $\bigcup C$ is such an upper bound (exercise). Thus there exists a maximal element $B$ of $A$. So $B$ is a linearly independent set and if $v \in V \setminus B$ then $B \cup \{v\}$ is not linearly independent. Hence $v$ is a linear combination of elements in $B$ and $B$ spans $V$.
+\end{example}
+
+\section{Postscript}
+
+Assume ZFC. For a first order language $\LL$ the \emph{cardinality} of the set of $\LL$ formulas (= cardinality of the alphabet).
+Assuming ZFC the following hold for $\LL$ of arbitrary cardinality:
+\begin{enumerate}
+    \item Goedel Completeness Theorem in $\LL$ and results leading to it
+    \item compactness Theorem
+\end{enumerate}
+(and the same for normal models in $\LL^=$.
+
+\end{document}  
